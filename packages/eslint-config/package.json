@@ -2,6 +2,21 @@
   "name": "@huangjunsen/eslint-config",
   "version": "1.0.0",
   "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./flat": "./flat/index.js",
+    "./flat/typescript": "./flat/typescript.js",
+    "./flat/react": "./flat/react.js",
+    "./flat/vue": "./flat/vue.js",
+    "./vue": "./vue.js",
+    "./react": "./react.js",
+    "./node": "./node.js",
+    "./es5": "./es5.js",
+    "./typescript": "./typescript/index.js",
+    "./typescript/react": "./typescript/react.js",
+    "./typescript/vue": "./typescript/vue.js",
+    "./typescript/node": "./typescript/node.js"
+  },
   "description": "JavaScript TypeScript Node 规范",
   "keywords": [
     "encode",
@@ -24,6 +39,9 @@
   },
   "bugs": {
     "url": "https://github.com/Huang-junsen/js-encode-fe-spec/issues"
+  },
+  "dependencies": {
+    "globals": "^15.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.4",

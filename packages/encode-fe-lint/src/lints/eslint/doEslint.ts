@@ -1,5 +1,6 @@
 import { ESLint } from 'eslint';
 import fg from 'fast-glob';
+import fs from 'fs-extra';
 import { extname, join } from 'path';
 import { Config, PKG, ScanOptions } from '../../types';
 import { ESLINT_FILE_EXT, ESLINT_IGNORE_PATTERN } from '../../utils/constants';
@@ -22,7 +23,23 @@ export async function doESLint(options: DoESLintOptions) {
     });
   }
 
-  const eslint = new ESLint(getESLintConfig(options, options.pkg, options.config));
+  // 检测是否存在 Flat Config 配置文件 (eslint.config.*)
+  const hasFlatConfig = [
+    'eslint.config.js',
+    'eslint.config.mjs',
+    'eslint.config.cjs',
+    'eslint.config.ts',
+  ].some((file) => fs.existsSync(join(options.cwd, file)));
+
+  // 若项目存在 Flat Config，允许 ESLint 自动解析本地扁平配置；否则回退至传统的 Legacy 配置初始化
+  const eslintConfig = hasFlatConfig
+    ? {
+        fix: options.fix,
+        cwd: options.cwd,
+      }
+    : getESLintConfig(options, options.pkg, options.config);
+
+  const eslint = new ESLint(eslintConfig as any);
   const reports = await eslint.lintFiles(files);
   if (options.fix) {
     await ESLint.outputFixes(reports);

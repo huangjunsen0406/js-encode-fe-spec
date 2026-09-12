@@ -27,6 +27,7 @@ export async function doPrettier(options: DoPrettierOptions) {
 async function formatFile(filepath: string) {
   const text = await readFile(filepath, 'utf8');
   const options = await prettier.resolveConfig(filepath);
-  const formatted = prettier.format(text, { ...options, filepath });
+  // 兼容 Prettier 2.x (同步/异步) 与 Prettier 3.x (纯异步返回 Promise)
+  const formatted = await prettier.format(text, { ...options, filepath });
   await writeFile(filepath, formatted, 'utf8');
 }

@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "自定义eslint插件",
   "scripts": {
+    "build": "rm -rf dist && tsc",
     "test": "jest",
-    "prepublishOnly": "npm run test"
+    "prepublishOnly": "npm run build && npm run test"
   },
   "files": [
-    "configs/",
-    "rules/",
+    "dist/",
     "README.md"
   ],
   "keywords": [
@@ -16,7 +16,8 @@
     "eslint",
     "eslint-plugin"
   ],
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "author": "Huangjunsen <951434130@qq.com>",
   "homepage": "https://github.com/Huang-junsen/js-encode-fe-spec#readme",
   "license": "ISC",

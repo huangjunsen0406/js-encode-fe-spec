@@ -240,6 +240,9 @@ importers:
       '@types/glob':
         specifier: ^7.2.0
         version: 7.2.0
+      '@types/inquirer':
+        specifier: ^7.3.3
+        version: 7.3.3
       '@types/lodash':
         specifier: ^4.17.0
         version: 4.17.25
@@ -269,6 +272,10 @@ importers:
         version: 4.9.5
 
   packages/eslint-config:
+    dependencies:
+      globals:
+        specifier: ^15.0.0
+        version: 15.0.0
     devDependencies:
       '@babel/core':
         specifier: ^7.24.4
@@ -1595,6 +1602,9 @@ packages:
   '@types/graceful-fs@4.1.9':
     resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
 
+  '@types/inquirer@7.3.3':
+    resolution: {integrity: sha512-HhxyLejTHMfohAuhRun4csWigAMjXTmRyiJTU1Y/I1xmggikFMkOUoMQRlFm+zQcPEGHSs3io/0FAmNZf8EymQ==}
+
   '@types/istanbul-lib-coverage@2.0.6':
     resolution: {integrity: sha512-2QF/t/auWm0lsy8XtKVPG19v3sSOQlJe/YHZgfjb/KBBHOGSV+J2q/S671rcq9uTBrLAXmZpqJiaQbMT+zNU1w==}
 
@@ -1656,6 +1666,9 @@ packages:
 
   '@types/text-table@0.2.5':
     resolution: {integrity: sha512-hcZhlNvMkQG/k1vcZ6yHOl6WAYftQ2MLfTHcYRZ2xYZFD8tGVnE3qFV0lj1smQeDSR7/yY0PyuUalauf33bJeA==}
+
+  '@types/through@0.0.33':
+    resolution: {integrity: sha512-HsJ+z3QuETzP3cswwtzt2vEIiHBk/dCcHGhbmG5X3ecnwFD/lPrMpliGXxSCg03L9AhrdwA4Oz/qfspkDW+xGQ==}
 
   '@types/web-bluetooth@0.0.20':
     resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
@@ -3631,6 +3644,10 @@ packages:
   globals@13.24.0:
     resolution: {integrity: sha512-AhO5QUcj8llrbG09iWhPU2B204J1xnPeL8kQmVorSsy+Sjj1sk8gIyh6cUocGmH4L0UuhAJy+hJMRA4mgA4mFQ==}
     engines: {node: '>=8'}
+
+  globals@15.0.0:
+    resolution: {integrity: sha512-m/C/yR4mjO6pXDTm9/R/SpYTAIyaUB4EOzcaaMEl7mds7Mshct9GfejiJNQGjHHbdMPey13Kpu4TMbYi9ex1pw==}
+    engines: {node: '>=18'}
 
   globalthis@1.0.4:
     resolution: {integrity: sha512-DpLKbNU4WylpxJykQujfCcwYWiV/Jhm50Goo0wrVILAv5jOr9d+H+UR3PhSCD2rCCEIg0uc+G+muBTwD54JhDQ==}
@@ -8742,6 +8759,11 @@ snapshots:
     dependencies:
       '@types/node': 20.19.43
 
+  '@types/inquirer@7.3.3':
+    dependencies:
+      '@types/through': 0.0.33
+      rxjs: 6.6.0
+
   '@types/istanbul-lib-coverage@2.0.6': {}
 
   '@types/istanbul-lib-report@3.0.3':
@@ -8797,6 +8819,10 @@ snapshots:
       - typescript
 
   '@types/text-table@0.2.5': {}
+
+  '@types/through@0.0.33':
+    dependencies:
+      '@types/node': 20.19.43
 
   '@types/web-bluetooth@0.0.20': {}
 
@@ -11503,6 +11529,8 @@ snapshots:
   globals@13.24.0:
     dependencies:
       type-fest: 0.20.2
+
+  globals@15.0.0: {}
 
   globalthis@1.0.4:
     dependencies:

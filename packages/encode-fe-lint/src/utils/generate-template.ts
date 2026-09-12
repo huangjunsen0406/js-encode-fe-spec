@@ -55,6 +55,15 @@ export default (cwd: string, data: Record<string, any>, vscode?: boolean) => {
       ...data,
     });
 
+    // 若未启用 Flat Config，则不生成 eslint.config.mjs
+    if (name === 'eslint.config.mjs.ejs' && !data.enableFlatConfig) {
+      continue;
+    }
+    // 若启用了 Flat Config，则不生成传统 .eslintrc.js
+    if (name === '_eslintrc.js.ejs' && data.enableFlatConfig) {
+      continue;
+    }
+
     // 合并 vscode config
     if (/^_vscode/.test(name)) {
       content = mergeVSCodeConfig(filepath, content);

@@ -5,13 +5,14 @@
   <%_ if (enableStylelint) { _%>
   "stylelint.validate": [<%- stylelintExt.map((ext) => `"${ext.replace(/^\./, '')}"`).join(',') %>],
   <%_ } _%>
+  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true<%= enableStylelint || enableMarkdownlint ? ',' : ''%>
+    "source.fixAll.eslint": "explicit"<%= enableStylelint || enableMarkdownlint ? ',' : ''%>
     <%_ if (enableStylelint) { _%>
-    "source.fixAll.stylelint": true<%= enableMarkdownlint ? ',' : ''%>
+    "source.fixAll.stylelint": "explicit"<%= enableMarkdownlint ? ',' : ''%>
     <%_ } _%>
     <%_ if (enableMarkdownlint) { _%>
-    "source.fixAll.markdownlint": true
+    "source.fixAll.markdownlint": "explicit"
     <%_ } _%>
   },
   <%_ if (enablePrettier) { _%>
