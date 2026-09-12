@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/stylelint-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CSS规范",
   "keywords": [
     "encode",
@@ -29,11 +29,13 @@
   "bugs": {
     "url": "https://github.com/Huang-junsen/js-encode-fe-spec/issues"
   },
+  "dependencies": {
+    "stylelint-config-standard": "^34.0.0",
+    "stylelint-config-standard-scss": "^11.1.0",
+    "stylelint-scss": "^5.3.2"
+  },
   "devDependencies": {
     "jest": "^29.5.0",
-    "stylelint": "15.11.0",
-    "stylelint-config-standard": "34.0.0",
-    "stylelint-config-standard-scss": "11.1.0",
-    "stylelint-scss": "5.3.2"
+    "stylelint": "15.11.0"
   }
 }

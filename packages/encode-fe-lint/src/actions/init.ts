@@ -158,6 +158,7 @@ export default async (options: InitOptions) => {
 
       if (config.enablePrettier) {
         depsToInstall.push('@huangjunsen/prettier-config');
+        depsToInstall.push('eslint-config-prettier');
       }
 
       if (config.enableMarkdownlint) {
