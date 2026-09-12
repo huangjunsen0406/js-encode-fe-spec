@@ -15,6 +15,7 @@ export function getStylelintConfig(opts: ScanOptions, pkg: PKG, config: Config):
   const lintConfig: any = {
     fix: Boolean(fix),
     allowEmptyInput: true,
+    configBasedir: cwd,
   };
 
   if (config.stylelintOptions) {

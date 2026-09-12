@@ -87,10 +87,17 @@ program
     }
 
     checking[type]();
-    if (results.length > 0) printReport(results, false);
+    if (results.length > 0) {
+      printReport(results, false);
+    } else if (runErrors.length === 0) {
+      log.success('代码规范扫描完成，未发现任何规范问题！:D');
+    }
 
     // 输出 lint 运行错误
-    runErrors.forEach((e) => console.log(e));
+    if (runErrors.length > 0) {
+      log.warn('扫描过程中发生以下异常：');
+      runErrors.forEach((e) => console.log(e));
+    }
   });
 
 program

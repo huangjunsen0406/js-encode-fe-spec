@@ -12,7 +12,11 @@ export default async (options: ScanOptions): Promise<ScanReport> => {
     return fs.existsSync(localPath) ? require(localPath) : {};
   };
   const pkg: PKG = readConfigFile('package.json');
-  const config: Config = scanConfig || readConfigFile(`${PKG_NAME}.config.js`);
+  const configName = PKG_NAME.split('/').pop() || PKG_NAME;
+  const config: Config =
+    scanConfig ||
+    readConfigFile(`${configName}.config.js`) ||
+    readConfigFile(`${PKG_NAME}.config.js`);
   const runErrors: Error[] = [];
   let results: ScanResult[] = [];
 

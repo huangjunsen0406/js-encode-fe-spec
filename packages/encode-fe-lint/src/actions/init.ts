@@ -138,11 +138,32 @@ export default async (options: InitOptions) => {
     if (!disableNpmInstall) {
       log.info(`Step ${++step}. 安装依赖`);  // 记录安装依赖日志
       const npm = await npmType;  // 获取npm类型
-      const depsToInstall = [PKG_NAME];
-      if (config.eslintType && config.eslintType.startsWith('custom:')) {
-        const customPkg = config.eslintType.replace('custom:', '');
-        depsToInstall.push(customPkg);
+      const depsToInstall = [
+        PKG_NAME,
+        '@huangjunsen/commitlint-config',
+      ];
+
+      if (config.enableESLint !== false) {
+        if (config.eslintType && config.eslintType.startsWith('custom:')) {
+          const customPkg = config.eslintType.replace('custom:', '');
+          depsToInstall.push(customPkg);
+        } else {
+          depsToInstall.push('@huangjunsen/eslint-config');
+        }
       }
+
+      if (config.enableStylelint) {
+        depsToInstall.push('@huangjunsen/stylelint-config');
+      }
+
+      if (config.enablePrettier) {
+        depsToInstall.push('@huangjunsen/prettier-config');
+      }
+
+      if (config.enableMarkdownlint) {
+        depsToInstall.push('@huangjunsen/markdownlint-config');
+      }
+
       spawn.sync(npm, ['i', '-D', ...depsToInstall], { stdio: 'inherit', cwd });  // 同步执行npm安装命令
       log.success(`Step ${step}. 安装依赖成功 :D`);  // 记录成功日志
     }
