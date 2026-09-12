@@ -14,19 +14,31 @@
 
 ## 1. 现代 Flat Config 接入（推荐，ESLint 9+）
 
-在项目根目录创建 `eslint.config.mjs`：
+按项目类型选择对应入口，在项目根目录创建 `eslint.config.mjs`：
+
+| 项目类型 | 入口 |
+| --- | --- |
+| JavaScript | `@huangjunsen/eslint-config/flat` |
+| TypeScript | `@huangjunsen/eslint-config/flat/typescript` |
+| React（含 TSX） | `@huangjunsen/eslint-config/flat/react` |
+| Vue（含 `lang="ts"` / `lang="tsx"` 的 SFC） | `@huangjunsen/eslint-config/flat/vue` |
+| Node.js | `@huangjunsen/eslint-config/flat/node` |
+
+Vue / React 项目若使用 TypeScript，把 `flat/typescript` 一并引入，并放在**最后**（保证 TypeScript 的规则覆盖前置预设）：
 
 ```javascript
-import baseConfig from '@huangjunsen/eslint-config/flat';
-// 若为 TS 项目：import tsConfig from '@huangjunsen/eslint-config/flat/typescript';
-// 若为 React 项目：import reactConfig from '@huangjunsen/eslint-config/flat/react';
-// 若为 Vue 项目：import vueConfig from '@huangjunsen/eslint-config/flat/vue';
+import vueConfig from '@huangjunsen/eslint-config/flat/vue';
+import tsConfig from '@huangjunsen/eslint-config/flat/typescript';
 
 export default [
-  ...baseConfig,
-  // ...tsConfig,
+  ...vueConfig,
+  // 放在最后，保证 TypeScript 的规则能覆盖前置预设
+  ...tsConfig,
 ];
 ```
+
+> 所有 Flat Config 预设都已内置 `eslint-config-prettier`，不会与 Prettier 产生规则冲突；
+> 支持 ESLint 8.57 / 9 / 10，`encode-fe-lint` 会自动识别项目中的 `eslint.config.*` 并启用扁平配置。
 
 ---
 
