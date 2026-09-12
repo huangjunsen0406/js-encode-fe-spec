@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/encode-fe-lint",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "前端编码规范工程化标准脚手架",
   "bin": "./lib/cli.js",
   "main": "./lib/index.js",
@@ -35,7 +35,6 @@
     "@types/lodash": "^4.17.0",
     "@types/node": "^20.12.7",
     "@types/prettier": "^2.7.3",
-    "@types/stylelint": "^14.0.0",
     "@types/text-table": "^0.2.5",
     "copyfiles": "^2.4.1",
     "jest": "^27.5.1",
@@ -82,8 +81,8 @@
     "ora": "^5.4.1",
     "prettier": "^2.8.8",
     "strip-ansi": "^6.0.1",
-    "stylelint": "^14.16.1",
-    "stylelint-scss": "^4.7.0",
+    "stylelint": "^15.11.0",
+    "stylelint-scss": "^5.3.2",
     "terminal-link": "^2.1.1",
     "text-table": "^0.2.0",
     "vue-eslint-parser": "^7.11.0"

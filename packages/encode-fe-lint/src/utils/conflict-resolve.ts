@@ -36,7 +36,13 @@ const packagePrefixesToRemove = [
  */
 const checkUselessConfig = (cwd: string): string[] => {
   return []
-    .concat(glob.sync('.eslintrc?(.@(yaml|yml|json))', { cwd }))    .concat(glob.sync('eslint.config?(.@(js|mjs|cjs|ts))', { cwd }))    .concat(glob.sync('.stylelintrc?(.@(yaml|yml|json))', { cwd }))
+    .concat(glob.sync('.eslintrc?(.@(yaml|yml|json))', { cwd }))
+    .concat(glob.sync('eslint.config?(.@(js|mjs|cjs|ts))', { cwd }))
+    .concat(glob.sync('.stylelintrc?(.@(yaml|yml|json))', { cwd }))
+    // prettier.config.js / stylelint.config.js 的优先级低于本工具生成的 .prettierrc.js / .stylelintrc.js，
+    // 若不处理会造成项目原有配置被隐性覆盖，因此一并纳入冲突检测
+    .concat(glob.sync('prettier.config?(.@(js|cjs|mjs))', { cwd }))
+    .concat(glob.sync('stylelint.config?(.@(js|cjs|mjs))', { cwd }))
     .concat(glob.sync('.markdownlint@(rc|.@(yaml|yml|jsonc))', { cwd }))
     .concat(
       glob.sync('.prettierrc?(.@(cjs|config.js|config.cjs|yaml|yml|json|json5|toml))', { cwd }),
