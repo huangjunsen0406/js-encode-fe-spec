@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/prettier-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Prettier 基础配置规范",
   "main": "index.js",
   "keywords": [
