@@ -17,6 +17,7 @@ export function getESLintConfig(opts: ScanOptions, pkg: PKG, config: Config): ES
     ignore,
     extensions: ESLINT_FILE_EXT,
     errorOnUnmatchedPattern: false,
+    resolvePluginsRelativeTo: cwd,
   };
 
   if (config.eslintOptions) {
