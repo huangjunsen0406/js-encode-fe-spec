@@ -16,7 +16,7 @@
     "eslint",
     "eslint-plugin"
   ],
-  "main": "src/index.js",
+  "main": "index.js",
   "author": "Huangjunsen <951434130@qq.com>",
   "homepage": "https://github.com/Huang-junsen/js-encode-fe-spec#readme",
   "license": "ISC",

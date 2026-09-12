@@ -1,20 +1,16 @@
 {
-  "name": "@huangjunsen/commitlint-config",
+  "name": "@huangjunsen/prettier-config",
   "version": "1.0.0",
-  "description": "Git规范",
+  "description": "Prettier 基础配置规范",
   "main": "index.js",
   "keywords": [
     "encode",
-    "commit",
-    "lint"
+    "prettier",
+    "config"
   ],
   "author": "Huangjunsen <951434130@qq.com>",
   "homepage": "https://github.com/Huang-junsen/js-encode-fe-spec#readme",
   "license": "ISC",
-  "dependencies": {
-    "conventional-changelog-conventionalcommits": "^7.0.2",
-    "cz-git": "^1.9.1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Huang-junsen/js-encode-fe-spec.git"

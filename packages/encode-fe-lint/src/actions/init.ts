@@ -24,6 +24,17 @@ const chooseEslintType = async (): Promise<string> => {
     choices: PROJECT_TYPES, // 选项列表
   });
 
+  if (type === 'custom') {
+    const { customPkg } = await inquirer.prompt({
+      type: 'input',
+      name: 'customPkg',
+      message: '请输入外部 ESLint 配置包名称（例如 @antfu/eslint-config）:',
+      default: '@antfu/eslint-config',
+      validate: (input: string) => (input.trim() ? true : '配置包名称不能为空'),
+    });
+    return `custom:${customPkg.trim()}`;
+  }
+
   return type; // 返回选择的项目类型
 };
 
@@ -127,7 +138,12 @@ export default async (options: InitOptions) => {
     if (!disableNpmInstall) {
       log.info(`Step ${++step}. 安装依赖`);  // 记录安装依赖日志
       const npm = await npmType;  // 获取npm类型
-      spawn.sync(npm, ['i', '-D', PKG_NAME], { stdio: 'inherit', cwd });  // 同步执行npm安装命令
+      const depsToInstall = [PKG_NAME];
+      if (config.eslintType && config.eslintType.startsWith('custom:')) {
+        const customPkg = config.eslintType.replace('custom:', '');
+        depsToInstall.push(customPkg);
+      }
+      spawn.sync(npm, ['i', '-D', ...depsToInstall], { stdio: 'inherit', cwd });  // 同步执行npm安装命令
       log.success(`Step ${step}. 安装依赖成功 :D`);  // 记录成功日志
     }
   }
@@ -151,6 +167,15 @@ export default async (options: InitOptions) => {
   if (!pkg.husky.hooks) pkg.husky.hooks = {};  // 如果没有hooks字段，初始化为空对象
   pkg.husky.hooks['pre-commit'] = `${PKG_NAME.split("/").pop()} commit-file-scan`;  // 设置pre-commit钩子
   pkg.husky.hooks['commit-msg'] = `${PKG_NAME.split("/").pop()} commit-msg-scan`;  // 设置commit-msg钩子
+
+  // 配置 cz-git
+  if (!pkg.config) pkg.config = {};
+  if (!pkg.config.commitizen) {
+    pkg.config.commitizen = {
+      path: 'node_modules/cz-git',
+    };
+  }
+
   fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));  // 写入修改后的package.json
   log.success(`Step ${step}. 配置 git commit 卡点成功 :D`);  // 记录成功日志
 

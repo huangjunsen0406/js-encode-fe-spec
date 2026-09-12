@@ -17,6 +17,7 @@
     "publish": "pnpm -r publish --access public",
     "update-changelog": "changeset version",
     "lint": "markdownlint README.md",
+    "commit": "cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "docs:preview": "vitepress preview docs",
     "package_create": "ts-node ./scripts/create_package.ts",
@@ -36,11 +37,15 @@
     "@huangjunsen/eslint-config": "workspace:^",
     "@huangjunsen/eslint-plugin": "workspace:^",
     "@huangjunsen/markdownlint-config": "workspace:^",
+    "@huangjunsen/prettier-config": "workspace:^",
     "@huangjunsen/stylelint-config": "workspace:^",
     "@types/node": "^20.12.7",
+    "commitizen": "^4.3.0",
+    "cz-git": "^1.9.1",
     "fs-extra": "^11.2.0",
     "husky": "^9.0.11",
     "markdownlint": "^0.34.0",
+    "markdownlint-cli": "^0.41.0",
     "rimraf": "^3.0.2",
     "ts-node": "^10.9.2",
     "tslib": "^2.5.2",
@@ -52,5 +57,10 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
   }
 }

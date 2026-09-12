@@ -1,3 +1,21 @@
-module.exports = { extends: [ '<%= eslintType === 'index' ? '@huangjunsen/eslint-config' :
-`@huangjunsen/eslint-config/${eslintType}` %>', <%_ if (enablePrettier) { _%> 'prettier', <%_ } _%> ],
+<%_ if (eslintType && eslintType.startsWith('custom:')) { 
+  const customPkg = eslintType.replace('custom:', '');
+_%>
+module.exports = {
+  extends: [
+    '<%= customPkg %>',
+    <%_ if (enablePrettier) { _%>
+    'prettier',
+    <%_ } _%>
+  ],
 };
+<%_ } else if (eslintType) { _%>
+module.exports = {
+  extends: [
+    '<%= eslintType === 'index' ? '@huangjunsen/eslint-config' : `@huangjunsen/eslint-config/${eslintType}` %>',
+    <%_ if (enablePrettier) { _%>
+    'prettier',
+    <%_ } _%>
+  ],
+};
+<%_ } _%>
