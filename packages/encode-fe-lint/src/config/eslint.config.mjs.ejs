@@ -1,5 +1,44 @@
-import feSpecConfig from '@huangjunsen/eslint-config/flat';
+<%_
+  const isCustom = eslintType && eslintType.startsWith('custom:');
+  const customPkg = isCustom ? eslintType.replace('custom:', '') : '';
+  const useTs = !isCustom && /typescript/.test(eslintType);
+
+  let mainEntry = '/flat';
+  let mainName = 'baseConfig';
+  if (!isCustom) {
+    if (/vue/.test(eslintType)) {
+      mainEntry = '/flat/vue';
+      mainName = 'vueConfig';
+    } else if (/react/.test(eslintType)) {
+      mainEntry = '/flat/react';
+      mainName = 'reactConfig';
+    } else if (/node/.test(eslintType)) {
+      mainEntry = '/flat/node';
+      mainName = 'nodeConfig';
+    }
+  }
+_%>
+<%_ if (isCustom) { _%>
+// eslint.config.mjs
+// 当前使用自定义/社区预设（<%= customPkg %>），请在此处自行组合 Flat Config：
+// import customConfig from '<%= customPkg %>';
+import baseConfig from '@huangjunsen/eslint-config/flat';
 
 export default [
-  ...feSpecConfig,
+  ...baseConfig,
 ];
+<%_ } else { _%>
+// eslint.config.mjs
+import <%= mainName %> from '@huangjunsen/eslint-config<%= mainEntry %>';
+<%_ if (useTs) { _%>
+import tsConfig from '@huangjunsen/eslint-config/flat/typescript';
+<%_ } _%>
+
+export default [
+  ...<%= mainName %>,
+<%_ if (useTs) { _%>
+  // 放在最后，保证 TypeScript 的规则能覆盖前置预设
+  ...tsConfig,
+<%_ } _%>
+];
+<%_ } _%>

@@ -4,3 +4,8 @@ allowBuilds:
   esbuild: true
   husky: true
   vue-demi: true
+minimumReleaseAgeExclude:
+  - '@huangjunsen/commitlint-config@1.0.1'
+  - '@huangjunsen/eslint-config@1.0.1'
+  - '@huangjunsen/prettier-config@1.0.1'
+  - '@huangjunsen/stylelint-config@1.0.1'

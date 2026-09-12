@@ -81,6 +81,20 @@ const chooseEnablePrettier = async (): Promise<boolean> => {
   return enable; // 返回是否启用prettier
 };
 
+/**
+ * 选择 ESLint 配置格式（Flat Config / 传统 .eslintrc）
+ */
+const chooseEnableFlatConfig = async (defaultValue: boolean): Promise<boolean> => {
+  const { enable } = await inquirer.prompt({
+    type: 'confirm',
+    name: 'enable',
+    message: `Step ${++step}. 是否使用 ESLint Flat Config（eslint.config.mjs，推荐，ESLint 9+ 默认）：`,
+    default: defaultValue,
+  });
+
+  return enable;
+};
+
 export default async (options: InitOptions) => {
   const cwd = options.cwd || process.cwd();  // 获取当前工作目录
   const isTest = process.env.NODE_ENV === 'test';  // 检查是否为测试环境
@@ -128,6 +142,13 @@ export default async (options: InitOptions) => {
     config.enablePrettier = options.enablePrettier;  // 使用提供的选项
   } else {
     config.enablePrettier = await chooseEnablePrettier();  // 询问用户是否启用Prettier
+  }
+
+  // 初始化 `enableFlatConfig`
+  if (typeof options.enableFlatConfig === 'boolean') {
+    config.enableFlatConfig = options.enableFlatConfig;  // 使用提供的选项
+  } else {
+    config.enableFlatConfig = await chooseEnableFlatConfig(true);  // 询问用户是否使用 Flat Config
   }
 
   if (!isTest) {

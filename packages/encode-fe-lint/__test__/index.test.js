@@ -21,11 +21,16 @@ describe('init', () => {
       enableStylelint: true,
       enableMarkdownlint: true,
       enablePrettier: true,
+      enableFlatConfig: true,
     });
 
     const pkg = require(`${outputPath}/package.json`);
     const settings = require(`${outputPath}/.vscode/settings.json`);
+    const eslintConfig = fs.readFileSync(`${outputPath}/eslint.config.mjs`, 'utf8');
+    const prettierConfig = fs.readFileSync(`${outputPath}/.prettierrc.js`, 'utf8');
 
+    expect(eslintConfig).toContain('@huangjunsen/eslint-config/flat');
+    expect(prettierConfig).toContain('@huangjunsen/prettier-config');
     expect(settings['editor.defaultFormatter']).toBe('esbenp.prettier-vscode');
     expect(settings['eslint.validate'].includes('233')).toBeTruthy();
     expect(settings.test).toBeTruthy();

@@ -22,7 +22,14 @@ export default async (options: ScanOptions): Promise<ScanReport> => {
 
   // prettier
   if (fix && config.enablePrettier !== false) {
-    await doPrettier(options);
+    try {
+      const prettierErrors = await doPrettier(options);
+      if (prettierErrors.length > 0) {
+        runErrors.push(...prettierErrors);
+      }
+    } catch (e) {
+      runErrors.push(e);
+    }
   }
 
   // eslint

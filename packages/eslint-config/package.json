@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/eslint-config",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
@@ -8,6 +8,7 @@
     "./flat/typescript": "./flat/typescript.js",
     "./flat/react": "./flat/react.js",
     "./flat/vue": "./flat/vue.js",
+    "./flat/node": "./flat/node.js",
     "./vue": "./vue.js",
     "./react": "./react.js",
     "./node": "./node.js",
@@ -44,19 +45,21 @@
     "@babel/core": "^7.24.4",
     "@babel/eslint-parser": "^7.24.1",
     "@babel/preset-react": "^7.24.1",
-    "@typescript-eslint/eslint-plugin": "^7.7.0",
-    "@typescript-eslint/parser": "^7.7.0",
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@typescript-eslint/parser": "^8.70.0",
     "eslint-config-egg": "^13.1.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-jsx-plus": "^0.1.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-vue": "^9.25.0",
+    "eslint-plugin-vue": "^10.11.0",
     "globals": "^15.0.0",
     "lodash": "^4.17.21",
-    "vue-eslint-parser": "^9.4.2"
+    "typescript-eslint": "^8.70.0",
+    "vue-eslint-parser": "^10.4.1"
   },
   "devDependencies": {
     "eslint": "^8.7.0",

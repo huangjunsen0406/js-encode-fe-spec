@@ -88,6 +88,8 @@ export interface InitOptions {
   enableMarkdownlint?: boolean;
   // 是否启用 prettier
   enablePrettier?: boolean;
+  // 是否使用 ESLint Flat Config（eslint.config.mjs）
+  enableFlatConfig?: boolean;
   // 是否禁用自动在初始化完成后安装依赖
   disableNpmInstall?: boolean;
 }

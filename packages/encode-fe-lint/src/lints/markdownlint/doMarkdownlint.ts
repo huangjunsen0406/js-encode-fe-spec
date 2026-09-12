@@ -1,10 +1,10 @@
-import fg from 'fast-glob';
 import { readFile, writeFile } from 'fs-extra';
 import markdownlint, { LintError } from 'markdownlint';
 import markdownlintRuleHelpers from 'markdownlint-rule-helpers';
-import { extname, join } from 'path';
+import { extname } from 'path';
 import { Config, PKG, ScanOptions } from '../../types';
 import { MARKDOWN_LINT_FILE_EXT, MARKDOWN_LINT_IGNORE_PATTERN } from '../../utils/constants';
+import { globFiles } from '../../utils/glob';
 import { formatMarkdownlintResults } from './formatMarkdownlintResults';
 import { getMarkdownlintConfig } from './getMarkdownlintConfig';
 
@@ -18,14 +18,12 @@ export async function doMarkdownlint(options: DoMarkdownlintOptions) {
   if (options.files) {
     files = options.files.filter((name) => MARKDOWN_LINT_FILE_EXT.includes(extname(name)));
   } else {
-    const pattern = join(
+    files = await globFiles(
+      options.cwd,
       options.include,
-      `**/*.{${MARKDOWN_LINT_FILE_EXT.map((t) => t.replace(/^\./, '')).join(',')}}`,
+      MARKDOWN_LINT_FILE_EXT,
+      MARKDOWN_LINT_IGNORE_PATTERN,
     );
-    files = await fg(pattern, {
-      cwd: options.cwd,
-      ignore: MARKDOWN_LINT_IGNORE_PATTERN,
-    });
   }
   const results = await markdownlint.promises.markdownlint({
     ...getMarkdownlintConfig(options, options.pkg, options.config),
@@ -36,9 +34,6 @@ export async function doMarkdownlint(options: DoMarkdownlintOptions) {
     await Promise.all(
       Object.keys(results).map((filename) => formatMarkdownFile(filename, results[filename])),
     );
-    for (const file in results) {
-      if (!Object.prototype.hasOwnProperty.call(results, file)) continue;
-    }
   }
   return formatMarkdownlintResults(results, options.quiet);
 }

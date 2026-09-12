@@ -77,7 +77,8 @@ export const ESLINT_FILE_EXT: string[] = ['.js', '.jsx', '.ts', '.tsx', '.vue'];
  * 需要同步到 config/.eslintignore.ejs
  */
 export const ESLINT_IGNORE_PATTERN: string[] = [
-  'node_modules',
+  // 使用 **/ 前缀，避免 monorepo 中子包的 node_modules 被扫描
+  '**/node_modules/**',
   'build',
   'dist',
   'coverage',
@@ -97,12 +98,12 @@ export const STYLELINT_FILE_EXT: string[] = ['.css', '.scss', '.less', '.acss'];
  * stylelint 扫描忽略的文件或文件目录
  */
 export const STYLELINT_IGNORE_PATTERN: string[] = [
-  'node_modules/',
-  'build/',
-  'dist/',
-  'coverage/',
-  'es/',
-  'lib/',
+  '**/node_modules/**',
+  'build/**',
+  'dist/**',
+  'coverage/**',
+  'es/**',
+  'lib/**',
   '**/*.min.css',
   '**/*-min.css',
   '**/*.bundle.css',
@@ -117,12 +118,12 @@ export const MARKDOWN_LINT_FILE_EXT: string[] = ['.md'];
  * markdownLint 扫描忽略的文件或文件目录
  */
 export const MARKDOWN_LINT_IGNORE_PATTERN: string[] = [
-  'node_modules/',
-  'build/',
-  'dist/',
-  'coverage/',
-  'es/',
-  'lib/',
+  '**/node_modules/**',
+  'build/**',
+  'dist/**',
+  'coverage/**',
+  'es/**',
+  'lib/**',
 ];
 
 /**
@@ -138,7 +139,7 @@ export const PRETTIER_FILE_EXT = [
  * Prettier 扫描忽略的文件或文件目录
  */
 export const PRETTIER_IGNORE_PATTERN: string[] = [
-  'node_modules/**/*',
+  '**/node_modules/**',
   'build/**/*',
   'dist/**/*',
   'lib/**/*',

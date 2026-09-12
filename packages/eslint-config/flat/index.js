@@ -1,10 +1,15 @@
 const globals = require('globals');
+const { prettierOverrides } = require('./shared');
 
 /**
- * 基础 JS Flat Config 配置
+ * 基础 Flat Config（JavaScript）
+ *
+ * 只包含语言选项与通用的逻辑防错规则，不含格式化规则，
+ * 格式化统一交给 Prettier 完成。
  */
 module.exports = [
   {
+    name: 'fe-spec/base/language-options',
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -17,8 +22,10 @@ module.exports = [
     linterOptions: {
       reportUnusedDisableDirectives: 'warn',
     },
+  },
+  {
+    name: 'fe-spec/base/rules',
     rules: {
-      // 常见逻辑防错规则（非纯排版格式）
       'no-var': 'error',
       'prefer-const': ['error', { destructuring: 'all' }],
       'no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
@@ -29,4 +36,5 @@ module.exports = [
       eqeqeq: ['warn', 'always', { null: 'ignore' }],
     },
   },
+  ...prettierOverrides(),
 ];
