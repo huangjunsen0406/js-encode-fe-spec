@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/stylelint-config",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "CSS规范",
   "keywords": [
     "encode",
@@ -8,7 +8,7 @@
     "lint"
   ],
   "author": "Huangjunsen <951434130@qq.com>",
-  "homepage": "https://github.com/Huang-junsen/js-encode-fe-spec#readme",
+  "homepage": "https://huangjunsen0406.github.io/js-encode-fe-spec/packages/stylelint-config.html",
   "license": "ISC",
   "main": "index.js",
   "directories": {
@@ -21,24 +21,25 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Huang-junsen/js-encode-fe-spec.git"
+    "url": "git+https://github.com/huangjunsen0406/js-encode-fe-spec.git"
   },
   "scripts": {
-    "test": "jest"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "bugs": {
-    "url": "https://github.com/Huang-junsen/js-encode-fe-spec/issues"
+    "url": "https://github.com/huangjunsen0406/js-encode-fe-spec/issues"
   },
   "dependencies": {
-    "stylelint-config-standard": "^34.0.0",
-    "stylelint-config-standard-scss": "^11.1.0",
-    "stylelint-scss": "^5.3.2"
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "stylelint-scss": "^7.2.0"
   },
   "peerDependencies": {
-    "stylelint": "^15.10.0"
+    "stylelint": "^16.0.0 || ^17.0.0"
   },
   "devDependencies": {
-    "jest": "^29.5.0",
-    "stylelint": "15.11.0"
+    "cross-env": "^10.1.0",
+    "jest": "^30.5.1",
+    "stylelint": "^17.15.0"
   }
 }

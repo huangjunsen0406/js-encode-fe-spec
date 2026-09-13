@@ -30,6 +30,22 @@ const getBundledConfigDir = (): string => {
 };
 
 /**
+ * 项目是否存在自有 stylelint 配置
+ *
+ * stylelint.config.js 与 .stylelintrc 同属用户自有配置，同样交由 stylelint 自行发现，
+ * 避免被内置配置覆盖而导致项目配置静默失效。
+ */
+export function hasUserStylelintConfig(cwd: string, pkg: PKG): boolean {
+  const lintConfigFiles = globSync('.stylelintrc?(.@(js|yaml|yml|json))', { cwd });
+
+  return (
+    lintConfigFiles.length > 0 ||
+    Boolean(pkg.stylelint) ||
+    USER_CONFIG_FILES.some((file) => fs.existsSync(path.resolve(cwd, file)))
+  );
+}
+
+/**
  * 获取 Stylelint 配置
  */
 export function getStylelintConfig(opts: ScanOptions, pkg: PKG, config: Config): LinterOptions {
@@ -46,13 +62,7 @@ export function getStylelintConfig(opts: ScanOptions, pkg: PKG, config: Config):
     // 若用户传入了 stylelintOptions，则用用户的
     Object.assign(lintConfig, config.stylelintOptions);
   } else {
-    const lintConfigFiles = globSync('.stylelintrc?(.@(js|yaml|yml|json))', { cwd });
-    // stylelint.config.js 与 .stylelintrc 同属用户自有配置，同样交由 stylelint 自行发现，
-    // 避免被内置配置覆盖而导致项目配置静默失效
-    const hasUserConfig: boolean =
-      lintConfigFiles.length > 0 ||
-      Boolean(pkg.stylelint) ||
-      USER_CONFIG_FILES.some((file) => fs.existsSync(path.resolve(cwd, file)));
+    const hasUserConfig = hasUserStylelintConfig(cwd, pkg);
 
     if (!hasUserConfig) {
       lintConfig.config = {

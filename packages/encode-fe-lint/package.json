@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/encode-fe-lint",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "前端编码规范工程化标准脚手架",
   "bin": "./lib/cli.js",
   "main": "./lib/index.js",
@@ -17,7 +17,7 @@
     "README.md"
   ],
   "engines": {
-    "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+    "node": ">=22.12.0"
   },
   "keywords": [
     "encode",
@@ -37,7 +37,7 @@
     "cross-env": "^10.1.0",
     "jest": "^30.5.1",
     "nyc": "^17.1.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.9.3"
   },
   "dependencies": {
     "@babel/core": "^7.24.4",
@@ -51,7 +51,7 @@
     "@huangjunsen/stylelint-config": "workspace:^",
     "@typescript-eslint/eslint-plugin": "^8.70.0",
     "@typescript-eslint/parser": "^8.70.0",
-    "chalk": "^4.1.2",
+    "chalk": "^6.0.0",
     "command-exists": "^1.2.9",
     "commander": "^14.0.3",
     "cross-spawn": "^7.0.3",
@@ -66,31 +66,31 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-vue": "^10.11.0",
-    "execa": "^5.1.1",
+    "execa": "^10.0.1",
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.4.0",
     "glob": "^13.0.6",
     "inquirer": "^12.11.1",
-    "is-docker": "^2.2.1",
+    "is-docker": "^4.0.0",
     "lodash": "^4.17.21",
     "markdownlint": "^0.36.1",
     "markdownlint-rule-helpers": "^0.31.0",
-    "ora": "^5.4.1",
+    "ora": "^9.4.1",
     "prettier": "^3.9.6",
-    "strip-ansi": "^6.0.1",
-    "stylelint": "^15.11.0",
-    "terminal-link": "^2.1.1",
+    "strip-ansi": "^7.2.0",
+    "stylelint": "^17.15.0",
+    "terminal-link": "^5.0.0",
     "text-table": "^0.2.0",
     "vue-eslint-parser": "^10.4.1"
   },
   "author": "Huangjunsen <951434130@qq.com>",
-  "homepage": "https://github.com/Huang-junsen/js-encode-fe-spec#readme",
+  "homepage": "https://huangjunsen0406.github.io/js-encode-fe-spec/",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Huang-junsen/js-encode-fe-spec.git"
+    "url": "git+https://github.com/huangjunsen0406/js-encode-fe-spec.git"
   },
   "bugs": {
-    "url": "https://github.com/Huang-junsen/js-encode-fe-spec/issues"
+    "url": "https://github.com/huangjunsen0406/js-encode-fe-spec/issues"
   }
 }
