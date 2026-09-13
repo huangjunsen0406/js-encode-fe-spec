@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/commitlint-config",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Git规范",
   "main": "index.js",
   "keywords": [
@@ -9,7 +9,7 @@
     "lint"
   ],
   "author": "Huangjunsen <951434130@qq.com>",
-  "homepage": "https://github.com/Huang-junsen/js-encode-fe-spec#readme",
+  "homepage": "https://huangjunsen0406.github.io/js-encode-fe-spec/packages/commitlint-config.html",
   "license": "ISC",
   "dependencies": {
     "conventional-changelog-conventionalcommits": "^7.0.2",
@@ -25,9 +25,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Huang-junsen/js-encode-fe-spec.git"
+    "url": "git+https://github.com/huangjunsen0406/js-encode-fe-spec.git"
   },
   "bugs": {
-    "url": "https://github.com/Huang-junsen/js-encode-fe-spec/issues"
+    "url": "https://github.com/huangjunsen0406/js-encode-fe-spec/issues"
   }
 }

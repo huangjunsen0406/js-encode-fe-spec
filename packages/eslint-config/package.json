@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/eslint-config",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "index.js",
   "exports": {
     ".": "./index.js",
@@ -41,14 +41,14 @@
     "print-config": "eslint --print-config ./index.js > ./print-config.json"
   },
   "author": "Huangjunsen <951434130@qq.com>",
-  "homepage": "https://github.com/Huang-junsen/js-encode-fe-spec#readme",
+  "homepage": "https://huangjunsen0406.github.io/js-encode-fe-spec/packages/eslint-config.html",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Huang-junsen/js-encode-fe-spec.git"
+    "url": "git+https://github.com/huangjunsen0406/js-encode-fe-spec.git"
   },
   "bugs": {
-    "url": "https://github.com/Huang-junsen/js-encode-fe-spec/issues"
+    "url": "https://github.com/huangjunsen0406/js-encode-fe-spec/issues"
   },
   "dependencies": {
     "@babel/core": "^7.24.4",

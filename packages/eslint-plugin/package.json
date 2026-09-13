@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/eslint-plugin",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "自定义eslint插件",
   "scripts": {
     "build": "rm -rf dist && tsc",
@@ -22,14 +22,14 @@
     "eslint": "^8.57.0 || ^9.0.0 || ^10.0.0"
   },
   "author": "Huangjunsen <951434130@qq.com>",
-  "homepage": "https://github.com/Huang-junsen/js-encode-fe-spec#readme",
+  "homepage": "https://huangjunsen0406.github.io/js-encode-fe-spec/packages/eslint-plugin.html",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Huang-junsen/js-encode-fe-spec.git"
+    "url": "git+https://github.com/huangjunsen0406/js-encode-fe-spec.git"
   },
   "bugs": {
-    "url": "https://github.com/Huang-junsen/js-encode-fe-spec/issues"
+    "url": "https://github.com/huangjunsen0406/js-encode-fe-spec/issues"
   },
   "dependencies": {},
   "devDependencies": {

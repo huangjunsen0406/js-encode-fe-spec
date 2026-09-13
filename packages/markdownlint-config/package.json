@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/markdownlint-config",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.json",
   "files": [
     "index.json",
@@ -13,7 +13,7 @@
     "lint"
   ],
   "author": "Huangjunsen <951434130@qq.com>",
-  "homepage": "https://github.com/Huang-junsen/js-encode-fe-spec#readme",
+  "homepage": "https://huangjunsen0406.github.io/js-encode-fe-spec/packages/markdownlint-config.html",
   "license": "ISC",
   "peerDependencies": {
     "markdownlint": ">=0.25.0"
@@ -25,9 +25,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Huang-junsen/js-encode-fe-spec.git"
+    "url": "git+https://github.com/huangjunsen0406/js-encode-fe-spec.git"
   },
   "bugs": {
-    "url": "https://github.com/Huang-junsen/js-encode-fe-spec/issues"
+    "url": "https://github.com/huangjunsen0406/js-encode-fe-spec/issues"
   }
 }
