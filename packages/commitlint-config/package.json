@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/commitlint-config",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Git规范",
   "main": "index.js",
   "keywords": [
@@ -29,5 +29,10 @@
   },
   "bugs": {
     "url": "https://github.com/huangjunsen0406/js-encode-fe-spec/issues"
-  }
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "CHANGELOG.md"
+  ]
 }

@@ -1,10 +1,11 @@
 {
   "name": "@huangjunsen/markdownlint-config",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "index.json",
   "files": [
     "index.json",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "description": "markdown文档规范",
   "keywords": [

@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/eslint-plugin",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "自定义eslint插件",
   "scripts": {
     "build": "rm -rf dist && tsc",
@@ -9,7 +9,8 @@
   },
   "files": [
     "dist/",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "keywords": [
     "encode",

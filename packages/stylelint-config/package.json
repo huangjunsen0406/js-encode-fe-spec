@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/stylelint-config",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "CSS规范",
   "keywords": [
     "encode",
@@ -16,8 +16,8 @@
   },
   "files": [
     "index.js",
-    "package.json",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "repository": {
     "type": "git",

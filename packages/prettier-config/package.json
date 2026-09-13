@@ -1,11 +1,12 @@
 {
   "name": "@huangjunsen/prettier-config",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Prettier 基础配置规范",
   "main": "index.js",
   "files": [
     "index.js",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "keywords": [
     "encode",
