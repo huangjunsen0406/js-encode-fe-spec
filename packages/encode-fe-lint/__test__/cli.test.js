@@ -36,19 +36,63 @@ describe(`'fix' command`, () => {
 });
 
 describe('命令面', () => {
-  // 历史遗留：这里曾有 `exec eslint/stylelint/commitlint --version` 三个用例，
-  // 但 CLI 从未实现 exec 命令，参数被 commander 的 --version 截获，
-  // 断言到的其实是本 CLI 自己的版本号，属于恒真断言。
   test('--help 应列出全部已实现的命令', async () => {
     const { stdout } = await cli(['--help']);
 
-    for (const command of ['init', 'scan', 'fix', 'commit-msg-scan', 'commit-file-scan', 'update']) {
+    for (const command of ['init', 'scan', 'fix', 'exec', 'commit-msg-scan', 'commit-file-scan', 'update']) {
       expect(stdout).toContain(command);
     }
   });
 
   test('未知命令应报错而非静默通过', async () => {
     // 注意不能带 --version，否则会被 commander 的 --version 选项截获并以 0 退出
-    await expect(cli(['exec'])).rejects.toThrow(/unknown command 'exec'/);
+    await expect(cli(['not-a-command'])).rejects.toThrow(/unknown command 'not-a-command'/);
+  });
+});
+
+describe(`'exec' command`, () => {
+  const semverRegex = /\d+\.\d+\.\d+/;
+
+  // exec 必须把 --version 原样透传给目标工具，而不是被本 CLI 的 --version 截获，
+  // 因此这里断言的是「工具自己的版本号」而非本 CLI 的版本号
+  test.each(['eslint', 'stylelint', 'prettier'])(
+    `exec %s --version 应输出目标工具自身的版本号`,
+    async (tool) => {
+      const { stdout } = await cli(['exec', tool, '--version']);
+
+      expect(stdout).toMatch(semverRegex);
+      expect(stdout.trim()).not.toBe(packageJson.version);
+    },
+  );
+
+  test(`exec commitlint --version 应输出目标工具自身的版本号`, async () => {
+    const { stdout } = await cli(['exec', 'commitlint', '--version']);
+
+    expect(stdout).toMatch(semverRegex);
+    expect(stdout.trim()).not.toBe(packageJson.version);
+  });
+
+  test('未知工具应给出可选列表并以非 0 退出', async () => {
+    const result = await cli(['exec', 'no-such-tool']).catch((error) => error);
+
+    expect(result.exitCode).toBe(1);
+    expect(result.stderr).toContain('eslint');
+  });
+
+  test('无参数时应列出可用工具', async () => {
+    const { stdout } = await cli(['exec', '--help']);
+
+    for (const tool of ['eslint', 'stylelint', 'prettier', 'commitlint', 'markdownlint']) {
+      expect(stdout).toContain(tool);
+    }
+  });
+
+  test('工具的退出码应透传给调用方', async () => {
+    // 对不存在的文件执行检查，prettier 会以非 0 退出
+    const result = await cli(['exec', 'prettier', '--check', './__no_such_file__.js']).catch(
+      (error) => error,
+    );
+
+    expect(result.exitCode).toBe(2);
   });
 });

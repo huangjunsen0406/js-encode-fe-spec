@@ -17,13 +17,20 @@ const resolveExtendPath = (name: string): string => {
   if (name.startsWith('.') || name.startsWith('eslint:') || name.startsWith('plugin:')) {
     return name;
   }
-  try {
-    // 无后缀的包名（如 prettier）补齐为 eslint-config- 前缀的形式
-    const request = name.startsWith('@') || name.includes('/') ? name : `eslint-config-${name}`;
-    return require.resolve(request);
-  } catch (e) {
-    return name;
+  // 无后缀的包名（如 prettier）补齐为 eslint-config- 前缀的形式
+  const request = name.startsWith('@') || name.includes('/') ? name : `eslint-config-${name}`;
+  // 兜底：部分配置包不导出 `/index` 子路径，去掉后重试
+  const candidates = [request, request.replace(/\/index$/, '')];
+
+  for (const candidate of candidates) {
+    try {
+      return require.resolve(candidate);
+    } catch (e) {
+      // 尝试下一个候选
+    }
   }
+
+  return name;
 };
 
 /**

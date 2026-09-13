@@ -53,6 +53,10 @@ export async function doStylelint(options: DoStylelintOptions) {
       resolveIgnorePatterns(options.cwd, '.stylelintignore', STYLELINT_IGNORE_PATTERN),
     );
   }
+  // stylelint 会把空数组视为「未指定文件」并退化为扫描整个项目，
+  // 进而把 README.md 等非样式文件当 CSS 解析并抛出 CssSyntaxError
+  if (files.length === 0) return [];
+
   const useProjectStylelint = hasUserStylelintConfig(options.cwd, options.pkg);
   const linter: StylelintApi =
     (useProjectStylelint && resolveProjectStylelint(options.cwd)) || stylelint;

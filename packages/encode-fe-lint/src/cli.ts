@@ -14,6 +14,7 @@ import printReport from './utils/print-report';
 import npmType from './utils/npm-type';
 import { getCommitFiles, getAmendFiles } from './utils/git';
 import generateTemplate from './utils/generate-template';
+import { EXEC_TOOL_NAMES, findTool, resolveToolEntry } from './utils/resolve-tool';
 import { PKG_NAME, PKG_VERSION } from './utils/constants';
 
 const cwd = process.cwd();
@@ -38,6 +39,9 @@ const installDepsIfThereNo = async () => {
 
 program
   .version(PKG_VERSION)
+  // 让子命令自行解析其后的参数，这是 passThroughOptions 的前置条件，
+  // 同时也是 exec 能把 --version 等选项原样透传给目标工具的前提
+  .enablePositionalOptions()
   .description(
     `${PKG_NAME} 是 Lint 工具，提供简单的 CLI 和 Node.js API，让项目能够一键接入、一键扫描、一键修复、一键升级，并为项目配置 git commit 卡点，降低项目实施规范的成本`,
   );
@@ -161,6 +165,40 @@ program
 
     checking.succeed();
     if (results.length > 0) printReport(results, true);
+  });
+
+program
+  .command('exec <tool> [args...]')
+  .description(`调用内置的 lint 工具（${EXEC_TOOL_NAMES.join(' / ')}），优先使用项目内安装的版本`)
+  .allowUnknownOption()
+  .allowExcessArguments()
+  // 开启后参数不再被本 CLI 的 --version 等选项截获，可原样透传给目标工具
+  .passThroughOptions()
+  .action((toolName: string, args: string[]) => {
+    const tool = findTool(toolName);
+
+    if (!tool) {
+      log.error(`不支持的 lint 工具「${toolName}」，可选：${EXEC_TOOL_NAMES.join(' / ')}`);
+      process.exitCode = 1;
+      return;
+    }
+
+    const entry = resolveToolEntry(tool, cwd);
+    if (!entry) {
+      log.error(`未找到 ${tool.name}。${tool.hint || '请先在项目中安装该工具'} `);
+      process.exitCode = 1;
+      return;
+    }
+
+    // 用当前 node 执行入口文件，避免依赖 .bin shim（Windows 与 pnpm 布局下更稳）
+    const result = spawn.sync(process.execPath, [entry, ...(args || [])], {
+      stdio: 'inherit',
+      cwd,
+    });
+
+    if (result.status !== 0) {
+      process.exit(result.status ?? 1);
+    }
   });
 
 program

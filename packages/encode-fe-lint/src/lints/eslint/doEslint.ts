@@ -66,6 +66,10 @@ export async function doESLint(options: DoESLintOptions) {
     ? {
         fix: options.fix,
         cwd: options.cwd,
+        // 扫描时按扩展名枚举文件，被项目 ignores 命中的文件会逐个产生
+        // "File ignored because of a matching ignore pattern" 警告，
+        // 但「被项目配置忽略」本属预期，不应作为问题上报
+        warnIgnored: false,
       }
     : getESLintConfig(options, options.pkg, options.config);
 

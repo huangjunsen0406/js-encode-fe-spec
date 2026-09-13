@@ -1,6 +1,5 @@
 import { readFile, writeFile } from 'fs-extra';
 import markdownlint, { LintError } from 'markdownlint';
-import markdownlintRuleHelpers from 'markdownlint-rule-helpers';
 import { extname } from 'path';
 import { Config, PKG, ScanOptions } from '../../types';
 import { MARKDOWN_LINT_FILE_EXT, MARKDOWN_LINT_IGNORE_PATTERN } from '../../utils/constants';
@@ -47,7 +46,9 @@ async function formatMarkdownFile(filename: string, errors: LintError[]) {
 
   if (fixes?.length > 0) {
     const originalText = await readFile(filename, 'utf8');
-    const fixedText = markdownlintRuleHelpers.applyFixes(originalText, fixes);
+    // applyFixes 由 markdownlint 导出；markdownlint-rule-helpers 从 0.2x 起不再提供
+    const fixedText = markdownlint.applyFixes(originalText, fixes);
+
     if (originalText !== fixedText) {
       await writeFile(filename, fixedText, 'utf8');
       return errors.filter((error) => !error.fixInfo);

@@ -1,14 +1,20 @@
 import { globSync } from 'glob';
 import type { PKG } from '../../types';
 
+/** 共享配置包名 */
+export const ESLINT_CONFIG_PKG = '@huangjunsen/eslint-config';
+
 /**
  * 获取 ESLint 配置类型
+ *
+ * 返回值必须与 @huangjunsen/eslint-config 的 exports 子路径一一对应：
+ * `.`、`/typescript`、`/react`、`/vue`、`/node` 及其组合。
+ * 特别地，基础入口就是包名本身，不存在 `/index` 子路径（旧实现在无 dsl / 无 language
+ * 时会拼出 `/index`、`typescript/index`，导致 ESLint 报 Failed to load config）。
+ *
  * @param cwd
  * @param pkg
- * @returns eslint-config-encode/index
- * @returns eslint-config-encode/react
- * @returns eslint-config-encode/typescript/index
- * @returns eslint-config-encode/typescript/react
+ * @returns @huangjunsen/eslint-config 及其子路径
  */
 export function getESLintConfigType(cwd: string, pkg: PKG): string {
   const tsFiles = globSync('./!(node_modules)/**/*.@(ts|tsx)', { cwd });
@@ -25,7 +31,7 @@ export function getESLintConfigType(cwd: string, pkg: PKG): string {
     dsl = 'vue';
   }
 
-  return (
-    '@huangjunsen/eslint-config/' + `${language}/${dsl}`.replace(/\/$/, '/index').replace(/^\//, '')
-  );
+  const subpath = [language, dsl].filter(Boolean).join('/');
+
+  return subpath ? `${ESLINT_CONFIG_PKG}/${subpath}` : ESLINT_CONFIG_PKG;
 }

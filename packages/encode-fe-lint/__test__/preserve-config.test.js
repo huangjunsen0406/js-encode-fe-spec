@@ -73,7 +73,6 @@ describe('generate-template 保护项目已有配置', () => {
     expect(removed).toEqual([]);
     for (const name of [
       '.editorconfig',
-      '.eslintignore',
       '.stylelintignore',
       '.markdownlintignore',
       '.markdownlint.json',
@@ -86,6 +85,29 @@ describe('generate-template 保护项目已有配置', () => {
     ]) {
       expect(fs.existsSync(path.join(outputPath, name))).toBe(true);
     }
+
+    // Flat Config 已不再支持 .eslintignore，忽略规则改写入 eslint.config.mjs，
+    // 否则 ESLint 会因该文件发出 "no longer supported" 警告
+    expect(fs.existsSync(path.join(outputPath, '.eslintignore'))).toBe(false);
+    const flatConfig = fs.readFileSync(path.join(outputPath, 'eslint.config.mjs'), 'utf8');
+    expect(flatConfig).toContain('ignores: [');
+    expect(flatConfig).toContain("'**/node_modules/**'");
+  });
+
+  test('传统配置模式下仍会生成 .eslintignore', () => {
+    for (const name of Object.keys(PRESERVED_FILES)) {
+      fs.removeSync(path.join(outputPath, name));
+    }
+
+    generateTemplate(
+      outputPath,
+      { ...baseConfig, enableFlatConfig: false },
+      { overwrite: false },
+    );
+
+    expect(fs.existsSync(path.join(outputPath, '.eslintignore'))).toBe(true);
+    expect(fs.existsSync(path.join(outputPath, '.eslintrc.js'))).toBe(true);
+    expect(fs.existsSync(path.join(outputPath, 'eslint.config.mjs'))).toBe(false);
   });
 
   test('显式覆盖模式会清理同类配置并改用规范包配置', () => {

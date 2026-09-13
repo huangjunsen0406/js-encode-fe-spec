@@ -232,6 +232,11 @@ export default (
     if (name === '_eslintrc.js.ejs' && data.enableFlatConfig) {
       continue;
     }
+    // Flat Config 不再支持 .eslintignore（ESLint 会警告并忽略），
+    // 忽略规则应写在 eslint.config.mjs 的 ignores 字段中，模板已包含
+    if (name === '_eslintignore.ejs' && data.enableFlatConfig) {
+      continue;
+    }
 
     // 合并 vscode config
     if (/^_vscode/.test(name)) {

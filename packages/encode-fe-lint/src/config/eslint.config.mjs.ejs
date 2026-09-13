@@ -25,6 +25,14 @@ _%>
 import baseConfig from '@huangjunsen/eslint-config/flat';
 
 export default [
+  // 与旧 .eslintignore 等价的忽略规则（Flat Config 已不再支持 .eslintignore）
+  {
+    ignores: [
+<%_ eslintIgnores.forEach((item) => { _%>
+      '<%= item %>',
+<%_ }) _%>
+    ],
+  },
   ...baseConfig,
 ];
 <%_ } else { _%>
@@ -35,6 +43,14 @@ import tsConfig from '@huangjunsen/eslint-config/flat/typescript';
 <%_ } _%>
 
 export default [
+  // 与旧 .eslintignore 等价的忽略规则（Flat Config 已不再支持 .eslintignore）
+  {
+    ignores: [
+<%_ eslintIgnores.forEach((item) => { _%>
+      '<%= item %>',
+<%_ }) _%>
+    ],
+  },
   ...<%= mainName %>,
 <%_ if (useTs) { _%>
   // 放在最后，保证 TypeScript 的规则能覆盖前置预设
