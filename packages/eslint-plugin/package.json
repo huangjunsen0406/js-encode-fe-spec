@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/eslint-plugin",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "自定义eslint插件",
   "scripts": {
     "build": "rm -rf dist && tsc",
