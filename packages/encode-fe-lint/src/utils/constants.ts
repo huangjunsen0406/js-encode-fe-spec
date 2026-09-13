@@ -87,6 +87,8 @@ export const ESLINT_IGNORE_PATTERN: string[] = [
   '**/*.min.js',
   '**/*-min.js',
   '**/*.bundle.js',
+  // UMD 打包产物（常被 vendored 进源码目录）
+  '**/*.umd.js',
 ];
 
 /**

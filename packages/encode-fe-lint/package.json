@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/encode-fe-lint",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "前端编码规范工程化标准脚手架",
   "bin": "./lib/cli.js",
   "main": "./lib/index.js",
@@ -8,7 +8,7 @@
     "dev": "npm run copyfiles && tsc -w",
     "build": "rm -rf lib && npm run copyfiles && tsc",
     "copyfiles": "copyfiles -a -u 1 \"src/config/**\" lib",
-    "test": "npm run build && jest",
+    "test": "npm run build && cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "coverage": "nyc jest --silent --forceExit",
     "prepublishOnly": "npm run test"
   },
@@ -34,11 +34,11 @@
     "@types/inquirer": "^7.3.3",
     "@types/lodash": "^4.17.0",
     "@types/node": "^20.12.7",
-    "@types/prettier": "^2.7.3",
     "@types/text-table": "^0.2.5",
     "copyfiles": "^2.4.1",
-    "jest": "^27.5.1",
-    "nyc": "^15.1.0",
+    "cross-env": "^10.1.0",
+    "jest": "^30.5.1",
+    "nyc": "^17.1.0",
     "typescript": "^4.9.5"
   },
   "dependencies": {
@@ -79,7 +79,7 @@
     "markdownlint": "^0.25.1",
     "markdownlint-rule-helpers": "^0.13.0",
     "ora": "^5.4.1",
-    "prettier": "^2.8.8",
+    "prettier": "^3.9.6",
     "strip-ansi": "^6.0.1",
     "stylelint": "^15.11.0",
     "stylelint-scss": "^5.3.2",
