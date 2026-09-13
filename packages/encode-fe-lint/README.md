@@ -42,6 +42,7 @@ npx encode-fe-lint fix
 | `init` | 一键接入：初始化规范工具与配置文件，写入 npm scripts 与 Git 卡点 |
 | `scan` | 一键扫描：对项目做代码规范问题扫描 |
 | `fix` | 一键修复：自动修复可自动修复的规范问题 |
+| `exec` | 调用内置的 lint 工具，参数原样透传 |
 | `commit-msg-scan` | 检查 commit message（由 Git `commit-msg` 钩子调用） |
 | `commit-file-scan` | 检查本次提交的代码（由 Git `pre-commit` 钩子调用） |
 | `update` | 更新 `encode-fe-lint` 自身到最新版本 |
@@ -87,6 +88,27 @@ encode-fe-lint fix -i src           # 只修复指定目录
 encode-fe-lint commit-file-scan          # 仅对 error 卡口（默认）
 encode-fe-lint commit-file-scan --strict # 对 warn 和 error 都卡口
 ```
+
+### exec
+
+直接调用内置的 lint 工具，参数原样透传。适合在 npm scripts 中固定工具版本，
+或临时用某个工具排查问题：
+
+```bash
+encode-fe-lint exec eslint src            # 等价于 npx eslint src
+encode-fe-lint exec eslint --fix src      # 所有参数都会原样透传
+encode-fe-lint exec stylelint "src/**/*.scss"
+encode-fe-lint exec prettier --check .
+encode-fe-lint exec commitlint --from HEAD~1
+encode-fe-lint exec --help                # 列出可用工具
+```
+
+可用工具：`eslint`、`stylelint`、`prettier`、`commitlint`、`markdownlint`。
+
+- **优先使用项目内安装的版本**，项目未安装时才回退到本包内置的版本；
+  `markdownlint` 的命令行由 `markdownlint-cli` 提供，需要项目自行安装（`npm i -D markdownlint-cli`）。
+- 工具的退出码会原样返回，可直接用于 CI 卡口。
+- `exec` 只是原样转发参数，不会套用本工具的内置预设；如需使用内置预设请用 `scan` / `fix`。
 
 ---
 

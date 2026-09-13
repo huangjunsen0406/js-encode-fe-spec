@@ -58,7 +58,26 @@ encode-fe-lint fix
 
 ---
 
-## 4. 规范式 Git 提交（cz-git）
+## 4. 直接调用内置工具（exec）
+
+需要单独使用某个 lint 工具时，用 `exec` 直接调起，参数会原样透传：
+
+```bash
+encode-fe-lint exec eslint --fix src
+encode-fe-lint exec stylelint "src/**/*.scss"
+encode-fe-lint exec prettier --check .
+encode-fe-lint exec commitlint --from HEAD~1
+```
+
+可用工具：`eslint`、`stylelint`、`prettier`、`commitlint`、`markdownlint`。
+**优先使用项目内安装的版本**，未安装时才回退到内置版本；退出码原样返回，可直接用于 CI 卡口。
+
+> 与 `scan` / `fix` 的区别：`scan` / `fix` 会套用本工具的内置预设并汇总报告，
+> `exec` 只是原样转发参数，完全按项目自身的配置执行。
+
+---
+
+## 5. 规范式 Git 提交（cz-git）
 
 项目初始化后，已配置好 `cz-git` 交互式提示。在项目根目录下运行：
 
