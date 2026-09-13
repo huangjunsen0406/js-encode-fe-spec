@@ -40,6 +40,29 @@ export default [
 > 所有 Flat Config 预设都已内置 `eslint-config-prettier`，不会与 Prettier 产生规则冲突；
 > 支持 ESLint 8.57 / 9 / 10，`encode-fe-lint` 会自动识别项目中的 `eslint.config.*` 并启用扁平配置。
 
+### Vue 预设的规则档位
+
+Vue 预设基于 `eslint-plugin-vue` 的 `flat/essential`，而非 `recommended`。
+
+原因：`strongly-recommended` 及以上档位混入了大量**格式类**规则，它们无法被 Prettier 修复，
+只会在扫描报告中长期堆积。以真实项目实测，`attributes-order`、`attribute-hyphenation`、
+`require-default-prop`、`multi-word-component-names` 四条规则贡献了约 98% 的 Vue 告警。
+
+以下规则被显式关闭，如需开启可在自己的配置中覆盖：
+
+| 规则 | 关闭原因 |
+| --- | --- |
+| `vue/attributes-order` | 属性排序属格式问题，Prettier 不处理 |
+| `vue/attribute-hyphenation` | 属性命名风格属团队约定，非正确性问题 |
+| `vue/require-default-prop` | Vue 2 时代规则；Vue 3 用 `withDefaults(defineProps<T>())`，可选 prop 由类型 `?` 表达 |
+| `vue/multi-word-component-names` | 组件名常由路由 / 目录决定，`index.vue` 等入口组件必然为单词 |
+
+同时显式保留了以下正确性与安全规则：
+
+- `vue/no-mutating-props`（error）
+- `vue/no-v-html`（warn）
+- `vue/require-explicit-emits`（warn）
+
 ---
 
 ## 2. 传统 Legacy Config 接入（ESLint 8.x / 老项目）

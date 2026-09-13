@@ -51,7 +51,42 @@ Error: Cannot find module '@sxzz/prettier-config'
 
 ---
 
-## 4. 项目原有的 prettier / stylelint 配置疑似失效
+## 4. 格式化后出现 `Parsing error: Unexpected token. Did you mean {''>''}`
+
+**现象**：`.vue` 文件中使用了泛型写法，`fix` 之后扫描突然报解析错误，位置指向箭头函数的 `=>`。
+
+```
+91:25  error  Parsing error: Unexpected token. Did you mean `{'>'}` or `&gt;`?
+```
+
+**原因**：Vue 单文件组件中，泛型箭头函数必须写成 `<T,>(...)` 这种带尾逗号的形式，用于和 JSX 标签区分。
+
+早期版本内置 Prettier 2.x，它在处理 `.vue` 文件时会把 `<T,>` 规范化为 `<T>`，于是代码变成了：
+
+```typescript
+// 修复前（可正常解析）
+const buildList = <T,>(list: T[]) => list;
+// 被 Prettier 2 改写后（被当成 JSX 标签，解析失败）
+const buildList = <T>(list: T[]) => list;
+```
+
+**处理**：升级 `@huangjunsen/encode-fe-lint` 到 `>=1.0.14`（内置 Prettier 3.x，会保留 `<T,>`）。
+
+---
+
+## 5. 扫描时把第三方打包产物也算了进来
+
+**现象**：报告中出现大量来自 `node_modules` 之外的压缩 / 打包文件的告警，例如 vendored 进源码目录的 UMD 产物。
+
+**原因**：这类文件是构建产物，不应对其做规范检查。
+
+**处理**：升级 `@huangjunsen/encode-fe-lint` 到 `>=1.0.14`（默认忽略已包含 `**/*.umd.js`）。
+
+对于其他约定俗成的产物路径（如 `**/vendor/**`），请在项目根目录的 `.eslintignore` 中自行补充。
+
+---
+
+## 6. 项目原有的 prettier / stylelint 配置疑似失效
 
 `prettier.config.js` 与 `stylelint.config.js` 的解析优先级**低于** `.prettierrc.js` 与 `.stylelintrc.js`。当项目同时存在两者时，后者的规则会生效。
 
@@ -59,7 +94,7 @@ Error: Cannot find module '@sxzz/prettier-config'
 
 ---
 
-## 5. 扫描耗时过长
+## 7. 扫描耗时过长
 
 排查顺序：
 
