@@ -91,9 +91,6 @@ module.exports = {
       },
     ],
 
-    // 本条废弃，用新规则代替 react/jsx-sort-props
-    'react/jsx-sort-prop-types': 'off',
-
     // 属性按首字母排序
     'react/jsx-sort-props': [
       'off',
