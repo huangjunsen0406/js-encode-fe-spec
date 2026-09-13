@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/commitlint-config",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Git规范",
   "main": "index.js",
   "keywords": [
@@ -14,6 +14,14 @@
   "dependencies": {
     "conventional-changelog-conventionalcommits": "^7.0.2",
     "cz-git": "^1.9.1"
+  },
+  "peerDependencies": {
+    "@commitlint/cli": ">=16.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@commitlint/cli": {
+      "optional": true
+    }
   },
   "repository": {
     "type": "git",

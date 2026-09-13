@@ -1,7 +1,11 @@
 {
   "name": "@huangjunsen/markdownlint-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.json",
+  "files": [
+    "index.json",
+    "README.md"
+  ],
   "description": "markdown文档规范",
   "keywords": [
     "encode",
@@ -11,8 +15,13 @@
   "author": "Huangjunsen <951434130@qq.com>",
   "homepage": "https://github.com/Huang-junsen/js-encode-fe-spec#readme",
   "license": "ISC",
-  "dependencies": {
-    "markdownlint": "^0.34.0"
+  "peerDependencies": {
+    "markdownlint": ">=0.25.0"
+  },
+  "peerDependenciesMeta": {
+    "markdownlint": {
+      "optional": true
+    }
   },
   "repository": {
     "type": "git",

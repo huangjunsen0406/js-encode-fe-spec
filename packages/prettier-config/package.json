@@ -1,13 +1,25 @@
 {
   "name": "@huangjunsen/prettier-config",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Prettier 基础配置规范",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "README.md"
+  ],
   "keywords": [
     "encode",
     "prettier",
     "config"
   ],
+  "peerDependencies": {
+    "prettier": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "prettier": {
+      "optional": true
+    }
+  },
   "author": "Huangjunsen <951434130@qq.com>",
   "homepage": "https://github.com/Huang-junsen/js-encode-fe-spec#readme",
   "license": "ISC",

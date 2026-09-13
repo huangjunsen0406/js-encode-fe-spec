@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/stylelint-config",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CSS规范",
   "keywords": [
     "encode",
@@ -33,6 +33,9 @@
     "stylelint-config-standard": "^34.0.0",
     "stylelint-config-standard-scss": "^11.1.0",
     "stylelint-scss": "^5.3.2"
+  },
+  "peerDependencies": {
+    "stylelint": "^15.10.0"
   },
   "devDependencies": {
     "jest": "^29.5.0",
