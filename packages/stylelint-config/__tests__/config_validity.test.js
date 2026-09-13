@@ -78,3 +78,41 @@ describe('stylelint-config 配置有效性', () => {
     });
   });
 });
+
+/**
+ * Vue 单文件组件的 <style> 需要 postcss-html 才能解析
+ *
+ * 缺少该 override 时 stylelint 会把 <template> 里的插值当作 CSS 解析，
+ * 直接报 CssSyntaxError —— 表现为「Vue 项目的样式完全无法检查」。
+ */
+describe('Vue 单文件组件支持', () => {
+  const vueFixture = path.join(fixturesDir, 'vue-sfc.vue');
+
+  const lintVueFixture = async () => {
+    const result = await stylelint.lint({ configFile, files: [vueFixture], fix: false });
+    return (result.results || []).flatMap((item) => item.warnings || []);
+  };
+
+  it('fixtures 目录下存在 .vue 用例', () => {
+    assert.ok(fs.existsSync(vueFixture), '缺少 vue-sfc.vue 用例');
+  });
+
+  it('可解析 <style> 块，不再报 CssSyntaxError', async () => {
+    const warnings = await lintVueFixture();
+    const syntaxErrors = warnings.filter((item) => item.rule === 'CssSyntaxError');
+
+    assert.deepStrictEqual(
+      syntaxErrors.map((item) => item.text),
+      [],
+      '.vue 需要 overrides 中配置 customSyntax: postcss-html',
+    );
+  });
+
+  it('.vue 中 <style> 的规则确实生效', async () => {
+    const warnings = await lintVueFixture();
+    const rules = new Set(warnings.map((item) => item.rule));
+
+    assert.ok(rules.has('color-hex-length'), '应命中 color-hex-length');
+    assert.ok(rules.has('length-zero-no-unit'), '应命中 length-zero-no-unit');
+  });
+});

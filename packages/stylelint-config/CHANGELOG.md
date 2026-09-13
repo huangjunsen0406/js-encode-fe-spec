@@ -1,5 +1,12 @@
 # @huangjunsen/stylelint-config
 
+## 1.0.5
+
+### Minor Changes
+
+- 新增 Vue 单文件组件支持：内置 `postcss-html` 并为 `**/*.vue` 配置 `customSyntax`，此前 `.vue` 中的 `<template>` 插值会被当作 CSS 解析，直接报 `CssSyntaxError`，表现为「Vue 项目的样式完全无法检查」
+- `customSyntax` 使用 `require.resolve` 得到的绝对路径：stylelint 16 起裸模块名会从 stylelint 自身安装目录解析，绝对路径才稳定可用
+
 ## 1.0.4
 
 ### Patch Changes

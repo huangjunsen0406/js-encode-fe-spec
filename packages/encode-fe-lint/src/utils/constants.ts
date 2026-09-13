@@ -22,6 +22,14 @@ export const PKG_NAME: string = pkg.name;
 export const PKG_VERSION: string = pkg.version;
 
 /**
+ * 本包自身声明的依赖版本范围
+ *
+ * 发布时 pnpm 会把 workspace:^ 替换为真实范围（如 ^1.0.8），
+ * 因此用户项目里读到的就是可直接安装的版本范围。
+ */
+export const OWN_DEPENDENCIES: Record<string, string> = pkg.dependencies || {};
+
+/**
  * 项目类型
  */
 export const PROJECT_TYPES: Array<{ name: string; value: string }> = [
@@ -93,8 +101,11 @@ export const ESLINT_IGNORE_PATTERN: string[] = [
 
 /**
  * stylelint 扫描文件扩展名
+ *
+ * 含 .vue：Vue 单文件组件的 <style> 同样是待规范的样式代码。
+ * 其解析依赖 @huangjunsen/stylelint-config 内置的 postcss-html override。
  */
-export const STYLELINT_FILE_EXT: string[] = ['.css', '.scss', '.less', '.acss'];
+export const STYLELINT_FILE_EXT: string[] = ['.css', '.scss', '.less', '.acss', '.vue'];
 
 /**
  * stylelint 扫描忽略的文件或文件目录

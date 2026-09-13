@@ -4,6 +4,7 @@ CSS、SCSS、Less 样式代码的共享质量检查规范。
 
 - 继承 `stylelint-config-standard` 与 `stylelint-config-standard-scss`；
 - 禁止选择器重复、未知属性、简写属性覆盖详细属性等常见错误；
+- 内置 `postcss-html`，**开箱支持 Vue 单文件组件的 `<style>` 块**；
 - **国内移动端兼容**：放宽并支持小程序的 `rpx` 等自定义单位；
 - 不含排版 / 空白类规则（缩进、换行、分号、行长度等统一交给 Prettier）。
 
@@ -38,6 +39,20 @@ module.exports = {
   }
 }
 ```
+
+---
+
+## Vue 项目
+
+`.vue` 不是标准 CSS 语法，必须先由 `postcss-html` 取出 `<style>` 块，否则 stylelint 会把 `<template>` 里的插值当作 CSS 解析并报 `CssSyntaxError`。
+
+本配置已内置该能力，无需再安装 `stylelint-config-html`，直接扫描 `.vue` 文件即可：
+
+```bash
+npx stylelint "src/**/*.{vue,css,scss,less}"
+```
+
+`customSyntax` 用的是 `require.resolve('postcss-html')` 得到的**绝对路径**：stylelint 16 起，配置中的裸模块名会从 stylelint 自身安装目录解析，只有绝对路径才稳定可用。
 
 ---
 

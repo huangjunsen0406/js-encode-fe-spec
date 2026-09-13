@@ -1,3 +1,10 @@
+/**
+ * Vue 单文件组件的 <style> 解析器
+ *
+ * 用 require.resolve 取绝对路径，避免 stylelint 从自身安装目录解析裸模块名而失败
+ */
+const postcssHtml = require.resolve('postcss-html');
+
 module.exports = {
     defaultSeverity: 'warning',  // 设置所有规则的默认严重性级别。
     plugins: ['stylelint-scss'], // 引入 stylelint-scss 插件，启用 SCSS 特定的规则。
@@ -71,5 +78,18 @@ module.exports = {
       'scss/double-slash-comment-whitespace-inside': 'always', // SCSS 中双斜杠注释内必须有空白。
     },
     ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'], // 指定 stylelint 忽略的文件类型。
+
+    /**
+     * Vue 单文件组件支持
+     *
+     * .vue 不是标准 CSS 语法，必须先由 postcss-html 取出 <style> 块，
+     * 否则 stylelint 会报 CssSyntaxError（把模板里的插值当成 CSS 解析）。
+     */
+    overrides: [
+      {
+        files: ['**/*.vue'],
+        customSyntax: postcssHtml,
+      },
+    ],
   };
   

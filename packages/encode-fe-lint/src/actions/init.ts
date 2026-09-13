@@ -7,7 +7,8 @@ import npmType from '../utils/npm-type';
 import log from '../utils/log';
 import conflictResolve from '../utils/conflict-resolve';
 import generateTemplate from '../utils/generate-template';
-import { PROJECT_TYPES, PKG_NAME } from '../utils/constants';
+import { PROJECT_TYPES, PKG_NAME, PKG_VERSION } from '../utils/constants';
+import { compareVersion, resolveSpecDependency } from '../utils/version';
 import type { InitOptions, PKG } from '../types';
 
 let step = 0;  // 初始化步骤计数器
@@ -102,6 +103,7 @@ export default async (options: InitOptions) => {
   const disableNpmInstall = options.disableNpmInstall || false;  // 是否禁止安装npm依赖
   const config: Record<string, any> = {};  // 初始化配置对象
   let overwriteConfigs = false;  // 是否覆盖项目已有配置
+  let usedPackageManager = 'npm';  // 实际使用的包管理器，用于后续提示
   const pkgPath = path.resolve(cwd, 'package.json');  // 解析package.json的路径
   let pkg: PKG = fs.readJSONSync(pkgPath);  // 同步读取package.json文件
 
@@ -162,31 +164,34 @@ export default async (options: InitOptions) => {
     if (!disableNpmInstall) {
       log.info(`Step ${++step}. 安装依赖`);  // 记录安装依赖日志
       const npm = await npmType;  // 获取npm类型
+      usedPackageManager = npm;
+      // 必须带上版本号：否则解析结果完全取决于包管理器的供应链策略，
+      // 刚发布的版本会被判定为「过新」而回退到历史版本
       const depsToInstall = [
-        PKG_NAME,
-        '@huangjunsen/commitlint-config',
+        resolveSpecDependency(PKG_NAME),
+        resolveSpecDependency('@huangjunsen/commitlint-config'),
       ];
 
       if (config.enableESLint !== false) {
         if (config.eslintType && config.eslintType.startsWith('custom:')) {
           const customPkg = config.eslintType.replace('custom:', '');
-          depsToInstall.push(customPkg);
+          depsToInstall.push(customPkg);  // 社区预设不做版本约束
         } else {
-          depsToInstall.push('@huangjunsen/eslint-config');
+          depsToInstall.push(resolveSpecDependency('@huangjunsen/eslint-config'));
         }
       }
 
       if (config.enableStylelint) {
-        depsToInstall.push('@huangjunsen/stylelint-config');
+        depsToInstall.push(resolveSpecDependency('@huangjunsen/stylelint-config'));
       }
 
       if (config.enablePrettier) {
-        depsToInstall.push('@huangjunsen/prettier-config');
-        depsToInstall.push('eslint-config-prettier');
+        depsToInstall.push(resolveSpecDependency('@huangjunsen/prettier-config'));
+        depsToInstall.push(resolveSpecDependency('eslint-config-prettier'));
       }
 
       if (config.enableMarkdownlint) {
-        depsToInstall.push('@huangjunsen/markdownlint-config');
+        depsToInstall.push(resolveSpecDependency('@huangjunsen/markdownlint-config'));
       }
 
       spawn.sync(npm, ['i', '-D', ...depsToInstall], { stdio: 'inherit', cwd });  // 同步执行npm安装命令
@@ -196,6 +201,15 @@ export default async (options: InitOptions) => {
 
   // 更新 pkg.json
   pkg = fs.readJSONSync(pkgPath);  // 重新读取最新的package.json
+  // 校验实际安装到的版本：部分包管理器会把刚发布的版本判定为「过新」而静默回退到历史版本
+  const installedSpec: string | undefined =
+    (pkg.devDependencies || {})[PKG_NAME] || (pkg.dependencies || {})[PKG_NAME];
+  const installedVersion = installedSpec && installedSpec.replace(/^[^\d]*/, '');
+  if (installedVersion && compareVersion(installedVersion, PKG_VERSION) < 0) {
+    log.warn(`实际安装的 ${PKG_NAME} 为 ${installedVersion}，低于当前运行的 ${PKG_VERSION}`);
+    log.warn('这通常是包管理器的「新版本冷静期」策略所致（如 pnpm 11 默认的 minimumReleaseAge）');
+    log.warn(`如需使用指定版本，可执行：${usedPackageManager} add -D ${PKG_NAME}@^${PKG_VERSION}`);
+  }
   // 在 `package.json` 中写入 `scripts`
   if (!pkg.scripts) {
     pkg.scripts = {};  // 如果没有scripts字段，初始化为空对象

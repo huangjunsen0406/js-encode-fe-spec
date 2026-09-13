@@ -1,5 +1,13 @@
 # @huangjunsen/encode-fe-lint
 
+## 1.0.22
+
+### Patch Changes
+
+- `init` 安装依赖时显式指定版本：此前不带版本号，最终解析结果完全交给包管理器的供应链策略，pnpm 11 默认的 `minimumReleaseAge`（24 小时）会把刚发布的版本判定为过新而回退到历史版本（实测 `encode-fe-lint` 从 1.0.21 退到 1.0.6、其余规范包退到 1.0.0），导致已修复的问题全部复现
+- `init` 结束后校验实际安装到的版本，低于当前运行的版本时给出提示与修复命令
+- stylelint 扫描扩展名加入 `.vue`，使单文件组件的 `<style>` 一并纳入检查
+
 ## 1.0.21
 
 ### Patch Changes
