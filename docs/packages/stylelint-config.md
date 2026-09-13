@@ -22,3 +22,14 @@ module.exports = {
   extends: ['@huangjunsen/stylelint-config'],
 };
 ```
+
+### 与 `encode-fe-lint` 的协作方式
+
+`encode-fe-lint` 按以下优先级确定 stylelint 配置：
+
+1. 项目中存在 `.stylelintrc.*` 或 `stylelint.config.{js,cjs,mjs}`，或 `package.json` 中有 `stylelint` 字段
+   → 交由 stylelint 自行发现并加载，**不会**被内置预设覆盖；
+2. 以上均无 → 使用 `@huangjunsen/stylelint-config` 作为默认配置。
+
+> 自 `encode-fe-lint@1.0.15` 起支持 `stylelint.config.js`。
+> 在此之前，项目自带该文件时会被内置预设静默覆盖，导致项目配置失效。
