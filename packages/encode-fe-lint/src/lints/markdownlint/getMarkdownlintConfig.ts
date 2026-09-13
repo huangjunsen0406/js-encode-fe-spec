@@ -60,10 +60,12 @@ export function getMarkdownlintConfig(opts: ScanOptions, pkg: PKG, config: Confi
     );
 
     if (!configFile) {
-      lintConfig.config = markdownLintConfig;
+      // 内置配置来自 JSON 文件，其字面量类型会被推断为宽泛的 string，
+      // 与 markdownlint 的联合字面量类型不兼容，此处按配置对象断言
+      lintConfig.config = markdownLintConfig as markdownLint.Configuration;
     } else if (/\.(cjs|mjs)$/.test(configFile)) {
       // .cjs / .mjs 由模块导出，需自行 require；cli2 形式下规则位于 config 字段
-      lintConfig.config = resolveModuleConfig(configFile);
+      lintConfig.config = resolveModuleConfig(configFile) as markdownLint.Configuration;
     } else {
       lintConfig.config = markdownLint.readConfigSync(configFile);
     }

@@ -2,7 +2,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import ora from 'ora';
-import glob from 'glob';
+import { globSync } from 'glob';
 import { program } from 'commander';
 import spawn from 'cross-spawn';
 import { execSync } from 'child_process';
@@ -23,9 +23,9 @@ const cwd = process.cwd();
  */
 const installDepsIfThereNo = async () => {
   const lintConfigFiles: string[] = [
-    ...glob.sync('.eslintrc?(.@(js|yaml|yml|json))', { cwd }),
-    ...glob.sync('.stylelintrc?(.@(js|yaml|yml|json))', { cwd }),
-    ...glob.sync('.markdownlint(.@(yaml|yml|json))', { cwd }),
+    ...globSync('.eslintrc?(.@(js|yaml|yml|json))', { cwd }),
+    ...globSync('.stylelintrc?(.@(js|yaml|yml|json))', { cwd }),
+    ...globSync('.markdownlint(.@(yaml|yml|json))', { cwd }),
   ];
   const nodeModulesPath = path.resolve(cwd, 'node_modules');
 

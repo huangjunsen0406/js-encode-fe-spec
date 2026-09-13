@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs-extra';
 import _ from 'lodash';
-import glob from 'glob';
+import { globSync } from 'glob';
 import ejs from 'ejs';
 import {
   ESLINT_IGNORE_PATTERN,
@@ -212,7 +212,7 @@ export default (
   const preserved: string[] = [];
   const removed: string[] = [];
   const templatePath = path.resolve(__dirname, '../config');
-  const templates = glob.sync(`${vscode ? '_vscode' : '**'}/*.ejs`, { cwd: templatePath });
+  const templates = globSync(`${vscode ? '_vscode' : '**'}/*.ejs`, { cwd: templatePath });
   for (const name of templates) {
     const relativePath = name.replace(/\.ejs$/, '').replace(/^_/, '.');
     const filepath = path.resolve(cwd, relativePath);

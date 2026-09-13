@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs-extra';
-import glob from 'glob';
+import { globSync } from 'glob';
 import inquirer from 'inquirer';
 import log from './log';
 import { PKG_NAME } from './constants';
@@ -59,7 +59,7 @@ const TOOL_OWNED_FILES: string[] = [
  */
 const checkLegacyConfig = (cwd: string): string[] =>
   LEGACY_CONFIG_PATTERNS.reduce<string[]>(
-    (list, pattern) => list.concat(glob.sync(pattern, { cwd })),
+    (list, pattern) => list.concat(globSync(pattern, { cwd })),
     [],
   );
 
@@ -68,8 +68,7 @@ const checkLegacyConfig = (cwd: string): string[] =>
  * @param cwd
  */
 const checkExistingConfig = (cwd: string): string[] => {
-  return glob
-    .sync('**/*.ejs', { cwd: path.resolve(__dirname, '../config') })
+  return globSync('**/*.ejs', { cwd: path.resolve(__dirname, '../config') })
     .map((name) => name.replace(/\.ejs$/, '').replace(/^_/, '.'))
     .filter((filename) => !TOOL_OWNED_FILES.includes(filename))
     .filter((filename) => fs.existsSync(path.resolve(cwd, filename)));

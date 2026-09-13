@@ -2,7 +2,7 @@ import { extname } from 'path';
 import stylelint from 'stylelint';
 import { PKG, ScanOptions } from '../../types';
 import { STYLELINT_FILE_EXT, STYLELINT_IGNORE_PATTERN } from '../../utils/constants';
-import { globFiles } from '../../utils/glob';
+import { globFiles, resolveIgnorePatterns } from '../../utils/glob';
 import { formatStylelintResults } from './formatStylelintResults';
 import { getStylelintConfig } from './getStylelintConfig';
 
@@ -19,7 +19,7 @@ export async function doStylelint(options: DoStylelintOptions) {
       options.cwd,
       options.include,
       STYLELINT_FILE_EXT,
-      STYLELINT_IGNORE_PATTERN,
+      resolveIgnorePatterns(options.cwd, '.stylelintignore', STYLELINT_IGNORE_PATTERN),
     );
   }
   const data = await stylelint.lint({

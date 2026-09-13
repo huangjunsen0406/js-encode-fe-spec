@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import glob from 'glob';
+import { globSync } from 'glob';
 import path from 'path';
 import { LinterOptions } from 'stylelint';
 import type { Config, PKG, ScanOptions } from '../../types';
@@ -46,7 +46,7 @@ export function getStylelintConfig(opts: ScanOptions, pkg: PKG, config: Config):
     // 若用户传入了 stylelintOptions，则用用户的
     Object.assign(lintConfig, config.stylelintOptions);
   } else {
-    const lintConfigFiles = glob.sync('.stylelintrc?(.@(js|yaml|yml|json))', { cwd });
+    const lintConfigFiles = globSync('.stylelintrc?(.@(js|yaml|yml|json))', { cwd });
     // stylelint.config.js 与 .stylelintrc 同属用户自有配置，同样交由 stylelint 自行发现，
     // 避免被内置配置覆盖而导致项目配置静默失效
     const hasUserConfig: boolean =

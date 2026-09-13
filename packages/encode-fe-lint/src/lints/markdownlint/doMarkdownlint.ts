@@ -4,7 +4,7 @@ import markdownlintRuleHelpers from 'markdownlint-rule-helpers';
 import { extname } from 'path';
 import { Config, PKG, ScanOptions } from '../../types';
 import { MARKDOWN_LINT_FILE_EXT, MARKDOWN_LINT_IGNORE_PATTERN } from '../../utils/constants';
-import { globFiles } from '../../utils/glob';
+import { globFiles, resolveIgnorePatterns } from '../../utils/glob';
 import { formatMarkdownlintResults } from './formatMarkdownlintResults';
 import { getMarkdownlintConfig } from './getMarkdownlintConfig';
 
@@ -22,7 +22,11 @@ export async function doMarkdownlint(options: DoMarkdownlintOptions) {
       options.cwd,
       options.include,
       MARKDOWN_LINT_FILE_EXT,
-      MARKDOWN_LINT_IGNORE_PATTERN,
+      resolveIgnorePatterns(
+        options.cwd,
+        '.markdownlintignore',
+        MARKDOWN_LINT_IGNORE_PATTERN,
+      ),
     );
   }
   const results = await markdownlint.promises.markdownlint({

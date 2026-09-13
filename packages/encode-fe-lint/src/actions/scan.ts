@@ -4,6 +4,12 @@ import { doESLint, doMarkdownlint, doPrettier, doStylelint } from '../lints';
 import type { Config, PKG, ScanOptions, ScanReport, ScanResult } from '../types';
 import { PKG_NAME } from '../utils/constants';
 
+/**
+ * 将 catch 到的未知异常归一化为 Error 实例
+ * （tsconfig 若启用 useUnknownInCatchVariables，catch 变量类型为 unknown）
+ */
+const toError = (e: unknown): Error => (e instanceof Error ? e : new Error(String(e)));
+
 export default async (options: ScanOptions): Promise<ScanReport> => {
   const { cwd, fix, outputReport, config: scanConfig } = options;
 
@@ -28,7 +34,7 @@ export default async (options: ScanOptions): Promise<ScanReport> => {
         runErrors.push(...prettierErrors);
       }
     } catch (e) {
-      runErrors.push(e);
+      runErrors.push(toError(e));
     }
   }
 
@@ -38,7 +44,7 @@ export default async (options: ScanOptions): Promise<ScanReport> => {
       const eslintResults = await doESLint({ ...options, pkg, config });
       results = results.concat(eslintResults);
     } catch (e) {
-      runErrors.push(e);
+      runErrors.push(toError(e));
     }
   }
 
@@ -48,7 +54,7 @@ export default async (options: ScanOptions): Promise<ScanReport> => {
       const stylelintResults = await doStylelint({ ...options, pkg, config });
       results = results.concat(stylelintResults);
     } catch (e) {
-      runErrors.push(e);
+      runErrors.push(toError(e));
     }
   }
 
@@ -58,7 +64,7 @@ export default async (options: ScanOptions): Promise<ScanReport> => {
       const markdownlintResults = await doMarkdownlint({ ...options, pkg, config });
       results = results.concat(markdownlintResults);
     } catch (e) {
-      runErrors.push(e);
+      runErrors.push(toError(e));
     }
   }
 

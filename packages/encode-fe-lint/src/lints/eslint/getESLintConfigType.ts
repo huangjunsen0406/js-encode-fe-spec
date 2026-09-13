@@ -1,4 +1,4 @@
-import glob from 'glob';
+import { globSync } from 'glob';
 import type { PKG } from '../../types';
 
 /**
@@ -11,9 +11,9 @@ import type { PKG } from '../../types';
  * @returns eslint-config-encode/typescript/react
  */
 export function getESLintConfigType(cwd: string, pkg: PKG): string {
-  const tsFiles = glob.sync('./!(node_modules)/**/*.@(ts|tsx)', { cwd });
-  const reactFiles = glob.sync('./!(node_modules)/**/*.@(jsx|tsx)', { cwd });
-  const vueFiles = glob.sync('./!(node_modules)/**/*.vue', { cwd });
+  const tsFiles = globSync('./!(node_modules)/**/*.@(ts|tsx)', { cwd });
+  const reactFiles = globSync('./!(node_modules)/**/*.@(jsx|tsx)', { cwd });
+  const vueFiles = globSync('./!(node_modules)/**/*.vue', { cwd });
   const dependencies = Object.keys(pkg.dependencies || {});
   const language = tsFiles.length > 0 ? 'typescript' : '';
   let dsl = '';
