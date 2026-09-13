@@ -1,6 +1,6 @@
 {
   "name": "@huangjunsen/eslint-plugin",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "自定义eslint插件",
   "scripts": {
     "build": "rm -rf dist && tsc",
@@ -33,9 +33,10 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@types/eslint": "^8.56.10",
+    "@types/node": "^20.12.7",
     "eslint": "^8.57.0",
     "jest": "^30.5.1",
-    "typescript": "^5.0.4",
-    "@types/node": "^20.12.7"
+    "typescript": "^5.0.4"
   }
 }

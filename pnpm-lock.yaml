@@ -322,6 +322,9 @@ importers:
 
   packages/eslint-plugin:
     devDependencies:
+      '@types/eslint':
+        specifier: ^8.56.10
+        version: 8.56.12
       '@types/node':
         specifier: ^20.12.7
         version: 20.19.43
