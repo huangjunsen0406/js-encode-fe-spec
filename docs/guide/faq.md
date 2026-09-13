@@ -43,11 +43,27 @@ Error: Cannot find module '@sxzz/prettier-config'
 
 ## 3. 样式文件报 `Unknown rule xxx`
 
-**现象**：stylelint 输出 `Unknown rule selector-anb-no-unmatchable` 之类的错误。
+**现象**：stylelint 输出 `Unknown rule indentation`、`Unknown rule max-line-length` 之类的错误。
 
-**原因**：`encode-fe-lint` 内置的 stylelint 版本低于 `@huangjunsen/stylelint-config` 所引用的 `stylelint-config-standard`。
+**原因**：项目配置里声明了 stylelint **16 起已移除**的排版与空白类（stylistic）规则。
 
-**处理**：升级 `@huangjunsen/encode-fe-lint` 到 `>=1.0.13`（内置 stylelint 15）。
+stylelint 16 把全部排版规则移交给了 Prettier，下列规则已不存在：
+
+```text
+indentation                          max-line-length
+no-extra-semicolons                  no-eol-whitespace
+no-missing-end-of-source-newline     value-list-comma-space-after
+declaration-block-trailing-semicolon block-opening-brace-newline-after
+block-opening-brace-space-after      block-opening-brace-space-before
+block-closing-brace-newline-before   block-closing-brace-space-before
+color-hex-case                       string-quotes
+unicode-bom
+```
+
+**处理**：从项目配置中删除上述规则，缩进、换行、分号、引号等排版问题交给 Prettier。
+
+若报的是其他规则名，则可能是 `encode-fe-lint` 内置 stylelint 版本低于配置所引用的
+`stylelint-config-standard`，升级 `@huangjunsen/encode-fe-lint` 即可（`>=1.0.18` 内置 stylelint 17）。
 
 ---
 
