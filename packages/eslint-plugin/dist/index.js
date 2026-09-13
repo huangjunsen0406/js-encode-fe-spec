@@ -5,6 +5,8 @@ const no_http_url_1 = require("./rules/no-http-url");
 const no_secret_info_1 = require("./rules/no-secret-info");
 const no_broad_semantic_versioning_1 = require("./rules/no-broad-semantic-versioning");
 const no_js_in_ts_project_1 = require("./rules/no-js-in-ts-project");
+// 版本号由构建时注入，避免与 package.json 脱节
+const { version } = require('../package.json');
 exports.rules = {
     'no-http-url': no_http_url_1.noHttpUrl,
     'no-secret-info': no_secret_info_1.noSecretInfo,
@@ -15,7 +17,7 @@ exports.rules = {
 const plugin = {
     meta: {
         name: '@huangjunsen/eslint-plugin',
-        version: '2.0.0',
+        version,
     },
     rules: exports.rules,
 };

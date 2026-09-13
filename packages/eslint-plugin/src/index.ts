@@ -4,6 +4,9 @@ import { noSecretInfo } from './rules/no-secret-info';
 import { noBroadSemanticVersioning } from './rules/no-broad-semantic-versioning';
 import { noJsInTsProject } from './rules/no-js-in-ts-project';
 
+// 版本号由构建时注入，避免与 package.json 脱节
+const { version } = require('../package.json');
+
 export const rules: Record<string, Rule.RuleModule> = {
   'no-http-url': noHttpUrl,
   'no-secret-info': noSecretInfo,
@@ -15,7 +18,7 @@ export const rules: Record<string, Rule.RuleModule> = {
 const plugin: ESLint.Plugin = {
   meta: {
     name: '@huangjunsen/eslint-plugin',
-    version: '2.0.0',
+    version,
   },
   rules,
 };

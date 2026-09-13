@@ -1,4 +1,4 @@
-const rule = require('../../rules/no-js-in-ts-project');
+const rule = require('../../dist/rules/no-js-in-ts-project').noJsInTsProject;
 const { RuleTester } = require('eslint');
 
 const ruleTester = new RuleTester();

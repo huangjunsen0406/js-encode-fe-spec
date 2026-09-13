@@ -1,4 +1,4 @@
-const rule = require('../../rules/no-secret-info');
+const rule = require('../../dist/rules/no-secret-info').noSecretInfo;
 const { RuleTester } = require('eslint');
 
 const ruleTester = new RuleTester();
