@@ -88,9 +88,32 @@ const buildList = <T>(list: T[]) => list;
 
 ## 6. 项目原有的 prettier / stylelint 配置疑似失效
 
-`prettier.config.js` 与 `stylelint.config.js` 的解析优先级**低于** `.prettierrc.js` 与 `.stylelintrc.js`。当项目同时存在两者时，后者的规则会生效。
+两个工具都存在「新旧两种文件名」并存时的**优先级倒置**问题，且顺序并不直观：
 
-`encode-fe-lint init` 会把这两类同名文件列为「与工具冲突的配置」并在覆盖前给出提示（`>=1.0.13`）。若你希望保留项目原有配置，请在初始化完成后删除工具生成的 `.prettierrc.js` / `.stylelintrc.js`。
+**Prettier**（实测 `prettier@3.9.6`）：
+
+```
+package.json 的 prettier 字段
+  → .prettierrc / .prettierrc.json / .yaml / .yml / .json5 / .toml
+    → .prettierrc.js / .mjs / .cjs / .ts / .cts / .mts
+      → prettier.config.js / .mjs / .cjs / .ts / .cts / .mts
+```
+
+即 **`.prettierrc.js` 会遮蔽 `prettier.config.js`**。
+
+**Stylelint**（来自 stylelint 自带 CLI 帮助文本）：
+
+```
+package.json 的 stylelint 字段
+  → .stylelintrc
+    → .stylelintrc.{cjs,mjs,js,ts,json,yaml,yml}
+      → stylelint.config.{cjs,mjs,js,ts}
+```
+
+即 **`.stylelintrc.*` 会遮蔽 `stylelint.config.*`**——虽然官方文档推荐的是后者。
+
+**处理建议**：项目内只保留一种配置文件。若希望使用规范包提供的配置，删除项目自有配置后重新执行 `encode-fe-lint init`。
+`encode-fe-lint` 自 `1.0.16` 起默认**不再删除、不再覆盖**项目已有的配置文件，只在日志中提示。
 
 ---
 

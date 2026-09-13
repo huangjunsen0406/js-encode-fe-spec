@@ -101,6 +101,7 @@ export default async (options: InitOptions) => {
   const checkVersionUpdate = options.checkVersionUpdate || false;  // 是否检查版本更新
   const disableNpmInstall = options.disableNpmInstall || false;  // 是否禁止安装npm依赖
   const config: Record<string, any> = {};  // 初始化配置对象
+  let overwriteConfigs = false;  // 是否覆盖项目已有配置
   const pkgPath = path.resolve(cwd, 'package.json');  // 解析package.json的路径
   let pkg: PKG = fs.readJSONSync(pkgPath);  // 同步读取package.json文件
 
@@ -153,7 +154,9 @@ export default async (options: InitOptions) => {
 
   if (!isTest) {
     log.info(`Step ${++step}. 检查并处理项目中可能存在的依赖和配置冲突`);  // 记录日志
-    pkg = await conflictResolve(cwd, options.rewriteConfig);  // 解决依赖和配置冲突
+    const resolved = await conflictResolve(cwd, options.rewriteConfig);  // 解决依赖和配置冲突
+    pkg = resolved.pkg;
+    overwriteConfigs = resolved.overwrite;
     log.success(`Step ${step}. 已完成项目依赖和配置冲突检查处理 :D`);  // 记录成功日志
 
     if (!disableNpmInstall) {
@@ -223,8 +226,21 @@ export default async (options: InitOptions) => {
   log.success(`Step ${step}. 配置 git commit 卡点成功 :D`);  // 记录成功日志
 
   log.info(`Step ${++step}. 写入配置文件`);  // 记录写入配置文件的日志
-  generateTemplate(cwd, config);  // 生成配置文件
+  const { preserved: preservedFiles, removed: removedFiles } = generateTemplate(cwd, config, {
+    overwrite: overwriteConfigs,
+  });  // 生成配置文件
   log.success(`Step ${step}. 写入配置文件成功 :D`);  // 记录成功日志
+
+  if (removedFiles.length > 0) {
+    log.warn('已清理以下同类配置（避免新旧配置并存）：');
+    log.warn(JSON.stringify(removedFiles, null, 2));
+  }
+
+  if (preservedFiles.length > 0) {
+    log.warn('以下配置已存在，已保留原文件，未做覆盖：');
+    log.warn(JSON.stringify(preservedFiles, null, 2));
+    log.warn('如需改用规范包提供的配置，请删除上述文件后重新执行 init');
+  }
 
   // 完成信息
   const logs = [`${PKG_NAME} 初始化完成 :D`].join('\r\n');  // 构建完成信息

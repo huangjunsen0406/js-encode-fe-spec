@@ -17,7 +17,7 @@ features:
   - title: 🚀 一体化脚手架
     details: 提供 encode-fe-lint CLI，支持一键初始化模版、一键代码扫描与一键自动修复。
   - title: ⚡ 拥抱 Flat Config
-    details: 支持 ESLint 9/10 现代扁平配置规范，同时对传统 .eslintrc.js 老项目 100% 向后兼容。
+    details: 支持 ESLint 9/10 现代扁平配置规范；同时兼容 ESLint 8/9 的传统 .eslintrc.js 老项目。
   - title: 📝 cz-git 交互式 Commit
     details: 内置 commitlint + cz-git 规范，交互式带表情提交，告别手动编写 commit message。
   - title: 🎨 Prettier 规范独立

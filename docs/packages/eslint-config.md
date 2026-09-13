@@ -4,6 +4,20 @@
 
 ---
 
+## 配置文件格式：新旧对照
+
+| 工具 | ✅ 新（推荐） | ⚠️ 旧（仍支持但不建议新增） | 备注 |
+| --- | --- | --- | --- |
+| **ESLint** | `eslint.config.{js,mjs,cjs,ts,mts,cts}` | `.eslintrc.{js,cjs,json,yaml,yml}`、`package.json` 的 `eslintConfig` | **ESLint 10 已彻底移除旧格式** |
+| **Stylelint** | `stylelint.config.{js,cjs,mjs,ts}` | `.stylelintrc`、`.stylelintrc.*`、`package.json` 的 `stylelint` | 旧格式**优先级更高**，会遮蔽新格式 |
+| **Prettier** | `.prettierrc.*` 与 `prettier.config.*` **同等**，均为官方支持 | —（无「旧格式」概念） | `.prettierrc.js` 优先级高于 `prettier.config.js` |
+| **markdownlint** | `.markdownlint.{jsonc,json,yaml,yml,cjs,mjs}`<br>`.markdownlint-cli2.{jsonc,yaml,cjs,mjs}` | - | `markdownlint-cli2` **不支持** `.markdownlintrc` 与 `.markdownlintignore` |
+| **commitlint** | `commitlint.config.{js,cjs,mjs,ts,cts,mts}` | `.commitlintrc*`、`package.json` 的 `commitlint` | cosmodiconfig 解析，新旧均官方支持 |
+
+> ESLint 的配置文件名存在优先级：`eslint.config.js` > `.mjs` > `.cjs` > `.ts` > `.mts` > `.cts`。
+
+---
+
 ## 特性亮点
 
 - **全框架支持**：内置 ES5、ES6+、React、Vue、Node.js 与 TypeScript 完整预设；
@@ -65,7 +79,11 @@ Vue 预设基于 `eslint-plugin-vue` 的 `flat/essential`，而非 `recommended`
 
 ---
 
-## 2. 传统 Legacy Config 接入（ESLint 8.x / 老项目）
+## 2. 传统 Legacy Config 接入（仅 ESLint 8 / 9）
+
+> ⚠️ **ESLint 10 已移除 eslintrc 配置系统**：v10 的依赖中不再包含 `@eslint/eslintrc`，
+> `use-at-your-own-risk` 也不再导出 `LegacyESLint`。使用 ESLint 10 的项目必须采用上文的 Flat Config。
+> 本节仅适用于仍停留在 ESLint 8 / 9 的项目（ESLint 9 需设置 `ESLINT_USE_FLAT_CONFIG=false` 才回退到 eslintrc）。
 
 在项目根目录创建 `.eslintrc.js`：
 

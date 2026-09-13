@@ -49,7 +49,7 @@ program
   .action(async (cmd) => {
     if (cmd.vscode) {
       const configPath = path.resolve(cwd, `${PKG_NAME}.config.js`);
-      generateTemplate(cwd, require(configPath), true);
+      generateTemplate(cwd, require(configPath), { vscode: true });
     } else {
       await init({
         cwd,
