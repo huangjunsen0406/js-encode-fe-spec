@@ -48,7 +48,7 @@ export function hasUserStylelintConfig(cwd: string, pkg: PKG): boolean {
 /**
  * 获取 Stylelint 配置
  */
-export function getStylelintConfig(opts: ScanOptions, pkg: PKG, config: Config): LinterOptions {
+export function getStylelintConfig(opts: ScanOptions, pkg: PKG, config: Config = {}): LinterOptions {
   const { cwd, fix } = opts;
   if (config.enableStylelint === false) return {} as any;
 

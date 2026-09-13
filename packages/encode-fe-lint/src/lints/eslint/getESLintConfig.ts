@@ -36,7 +36,7 @@ const resolveExtendPath = (name: string): string => {
 /**
  * 获取 ESLint 配置
  */
-export function getESLintConfig(opts: ScanOptions, pkg: PKG, config: Config): ESLint.Options {
+export function getESLintConfig(opts: ScanOptions, pkg: PKG, config: Config = {}): ESLint.Options {
   const { cwd, fix, ignore } = opts;
   const lintConfig: ESLint.Options = {
     cwd,

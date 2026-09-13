@@ -83,10 +83,10 @@ export interface ConflictResolveResult {
 export default async (cwd: string, rewriteConfig?: boolean): Promise<ConflictResolveResult> => {
   const pkgPath = path.resolve(cwd, 'package.json');
   const pkg: PKG = fs.readJSONSync(pkgPath);
-  const dependencies = [].concat(
-    Object.keys(pkg.dependencies || {}),
-    Object.keys(pkg.devDependencies || []),
-  );
+  const dependencies: string[] = [
+    ...Object.keys(pkg.dependencies || {}),
+    ...Object.keys(pkg.devDependencies || {}),
+  ];
   const willRemovePackage = dependencies.filter(
     (name) =>
       packageNamesToRemove.includes(name) ||

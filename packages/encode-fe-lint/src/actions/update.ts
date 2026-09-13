@@ -24,6 +24,9 @@ const checkLatestVersion = async (): Promise<string | null> => {
       return latestVersion;
     }
   }
+
+  // 逐位相等（如仅段数不同）时视为无更新
+  return null;
 };
 
 /**
@@ -56,6 +59,6 @@ export default async (install = true) => {
     }
   } catch (e) {
     checking.stop();
-    log.error(e);
+    log.error(e instanceof Error ? e.message : String(e));
   }
 };

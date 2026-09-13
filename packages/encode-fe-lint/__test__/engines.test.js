@@ -100,6 +100,19 @@ describe('无匹配文件时各引擎的行为', () => {
 
     expect(Array.isArray(results)).toBe(true);
   });
+
+  // config 是 ScanOptions 上的可选字段：直接调用引擎（不经过 actions/scan）时
+  // 往往不传 config，早期实现会在 `config.eslintOptions` 处抛
+  // TypeError: Cannot read properties of undefined
+  test.each([
+    ['eslint', () => require('../lib/lints/eslint/doEslint').doESLint],
+    ['stylelint', () => require('../lib/lints/stylelint/doStylelint').doStylelint],
+    ['markdownlint', () => require('../lib/lints/markdownlint/doMarkdownlint').doMarkdownlint],
+  ])('%s 引擎在未传 config 时不应抛错', async (name, load) => {
+    const engine = load();
+
+    await expect(engine({ cwd, include: cwd, pkg: {} })).resolves.toBeDefined();
+  });
 });
 
 describe('markdownlint 自动修复', () => {

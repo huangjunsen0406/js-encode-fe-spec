@@ -6,9 +6,9 @@ import type { ScanResult } from '../../types';
  */
 export function formatMarkdownlintResults(
   results: markdownlint.LintResults,
-  quiet: boolean,
+  quiet = false,
 ): ScanResult[] {
-  const parsedResults = [];
+  const parsedResults: ScanResult[] = [];
 
   for (const file in results) {
     if (!Object.prototype.hasOwnProperty.call(results, file) || quiet) continue;

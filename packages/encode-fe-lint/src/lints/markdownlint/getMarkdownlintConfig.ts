@@ -42,7 +42,11 @@ function resolveModuleConfig(filePath: string): Record<string, any> {
 /**
  * 获取 Markdownlint 配置
  */
-export function getMarkdownlintConfig(opts: ScanOptions, pkg: PKG, config: Config): LintOptions {
+export function getMarkdownlintConfig(
+  opts: ScanOptions,
+  pkg: PKG,
+  config: Config = {},
+): LintOptions {
   const { cwd } = opts;
   const lintConfig: LintOptions = {
     fix: Boolean(opts.fix),

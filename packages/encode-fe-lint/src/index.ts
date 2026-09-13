@@ -20,7 +20,7 @@ export const scan = async (options: ScanOptions) => {
 
   const report = await scanAction(options);
   const { results, errorCount, warningCount } = report;
-  let type = 'succeed';
+  let type: 'succeed' | 'fail' | 'warn' = 'succeed';
   if (errorCount > 0) {
     type = 'fail';
   } else if (warningCount > 0) {

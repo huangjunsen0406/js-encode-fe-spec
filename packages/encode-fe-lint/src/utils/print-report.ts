@@ -17,9 +17,16 @@ export default (results: ScanResult[], fix: boolean): void => {
   let warningCount = 0;
   let fixableErrorCount = 0;
   let fixableWarningCount = 0;
-  let summaryColor = 'yellow';
+  let summaryColor: 'yellow' | 'red' = 'yellow';
 
-  const transformMessage = ({ line, column, rule, url, message, errored }) => {
+  const transformMessage = ({
+    line,
+    column,
+    rule,
+    url,
+    message,
+    errored,
+  }: ScanResult['messages'][number]) => {
     if (errored) summaryColor = 'red';
     let text = '';
     if (rule && url) {
@@ -54,7 +61,7 @@ export default (results: ScanResult[], fix: boolean): void => {
   }
 
   const total = errorCount + warningCount;
-  const pluralize = (word, count) => (count === 1 ? word : `${word}s`);
+  const pluralize = (word: string, count: number): string => (count === 1 ? word : `${word}s`);
 
   // 修复日志
   if (fix) output += chalk.green('代码规范问题自动修复完成，请通过 git diff 确认修复效果 :D\n');
