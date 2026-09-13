@@ -88,6 +88,7 @@ Vue 预设基于 `eslint-plugin-vue` 的 `flat/essential`，而非 `recommended`
 在项目根目录创建 `.eslintrc.js`：
 
 ### JavaScript 项目
+
 ```javascript
 module.exports = {
   extends: ['@huangjunsen/eslint-config'],
@@ -95,6 +96,7 @@ module.exports = {
 ```
 
 ### TypeScript 项目
+
 ```javascript
 module.exports = {
   extends: ['@huangjunsen/eslint-config/typescript'],
@@ -102,6 +104,7 @@ module.exports = {
 ```
 
 ### React / Vue 项目
+
 ```javascript
 // React 项目
 module.exports = {

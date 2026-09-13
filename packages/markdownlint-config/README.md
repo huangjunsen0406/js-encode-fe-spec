@@ -45,8 +45,12 @@ npm install @huangjunsen/markdownlint-config markdownlint --save-dev
 | `line-length` | `false` | 中文文档按字符数限制行长意义不大 |
 | `list-marker-space` | `false` | 与 Prettier 的列表输出保持一致 |
 | `no-inline-html` | `false` | 允许 Badge、`<details>` 等内联 HTML |
-| `no-duplicate-header` | `false` | 允许不同章节下出现同名子标题 |
+| `no-duplicate-heading` | `false` | 允许不同章节下出现同名子标题（如 CHANGELOG 中各版本的「Patch Changes」） |
 | `proper-names.code_blocks` | `false` | 不检查代码块内的专有名词大小写 |
+
+> ⚠️ **规则名使用的是新别名**。`markdownlint` 0.36 只认 `no-duplicate-heading`，
+> 旧别名 `no-duplicate-header` 会被当作无效键静默忽略，导致「关闭重复标题」实际无效。
+> 若你的项目配置里用的是旧名，其对应规则仍在按默认值生效。
 
 ### `proper-names` 专有名词表
 
@@ -57,6 +61,9 @@ Javascript → JavaScript      Github → GitHub
 Http → HTTP                  Npm → npm
 Vuejs → Vue.js               Typescript → TypeScript
 ```
+
+> 💡 包名、变量名等小写专有名词容易被误报（如 `stylelint-scss` 会被要求写成 `SCSS`）。
+> 用反引号包裹（`` `stylelint-scss` ``）即可跳过检查。
 
 ---
 

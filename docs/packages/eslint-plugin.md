@@ -18,6 +18,7 @@
 ## 使用方式
 
 ### 现代 Flat Config
+
 ```javascript
 import plugin from '@huangjunsen/eslint-plugin';
 
@@ -27,6 +28,7 @@ export default [
 ```
 
 ### 传统 .eslintrc.js
+
 ```javascript
 module.exports = {
   plugins: ['@huangjunsen'],

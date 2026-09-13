@@ -15,6 +15,7 @@
 ## 接入方式
 
 ### 1. 配置 Commitlint
+
 在项目根目录创建 `commitlint.config.js`：
 
 ```javascript
@@ -24,6 +25,7 @@ module.exports = {
 ```
 
 ### 2. 配置交互式提交（cz-git）
+
 在 `package.json` 中配置：
 
 ```json
@@ -40,8 +42,10 @@ module.exports = {
 ```
 
 现在只需在终端执行：
+
 ```bash
 pnpm commit
 # 或 git cz
 ```
+
 即可唤起交互式提交面板！

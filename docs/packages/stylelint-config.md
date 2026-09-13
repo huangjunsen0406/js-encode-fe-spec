@@ -75,6 +75,6 @@ module.exports = {
 
 > 自 `encode-fe-lint@1.0.18` 起支持该行为。
 > 此前版本请确保项目内也安装了 stylelint，或把 `customSyntax` 改为 `require.resolve(...)` 的绝对路径。
-
+>
 > 自 `encode-fe-lint@1.0.15` 起支持 `stylelint.config.js`。
 > 在此之前，项目自带该文件时会被内置预设静默覆盖，导致项目配置失效。

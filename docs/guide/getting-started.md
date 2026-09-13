@@ -25,6 +25,7 @@ encode-fe-lint init
 ```
 
 执行后将自动启动交互式向导：
+
 1. **选择项目框架与语言**：支持纯 JavaScript/TypeScript、React、Vue、Node.js，或接入外部社区预设（如 `@antfu/eslint-config`）；
 2. **选择样式检查（Stylelint）**：是否对 CSS/SCSS/Less 进行样式规范检查；
 3. **选择文档检查（Markdownlint）**：是否开启 Markdown 文档格式规范；

@@ -11,7 +11,7 @@
     "list-marker-space": false,
     "line-length": false,
     "no-inline-html": false,
-    "no-duplicate-header": false,
+    "no-duplicate-heading": false,
     "fenced-code-language": true,
     "proper-names": {
       "names": [

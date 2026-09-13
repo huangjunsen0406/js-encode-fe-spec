@@ -24,7 +24,7 @@
 
 **现象**：
 
-```
+```text
 Error: Cannot find module '@sxzz/prettier-config'
     at Object.transform (.../prettier/index.js)
 ```
@@ -71,7 +71,7 @@ unicode-bom
 
 **现象**：`.vue` 文件中使用了泛型写法，`fix` 之后扫描突然报解析错误，位置指向箭头函数的 `=>`。
 
-```
+```text
 91:25  error  Parsing error: Unexpected token. Did you mean `{'>'}` or `&gt;`?
 ```
 
@@ -108,7 +108,7 @@ const buildList = <T>(list: T[]) => list;
 
 **Prettier**（实测 `prettier@3.9.6`）：
 
-```
+```text
 package.json 的 prettier 字段
   → .prettierrc / .prettierrc.json / .yaml / .yml / .json5 / .toml
     → .prettierrc.js / .mjs / .cjs / .ts / .cts / .mts
@@ -119,7 +119,7 @@ package.json 的 prettier 字段
 
 **Stylelint**（来自 stylelint 自带 CLI 帮助文本）：
 
-```
+```text
 package.json 的 stylelint 字段
   → .stylelintrc
     → .stylelintrc.{cjs,mjs,js,ts,json,yaml,yml}
